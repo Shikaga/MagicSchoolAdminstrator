@@ -1,5 +1,12 @@
 function Student(map,x,y) {
+	this.x = x;
+	this.y = y;
+	this.toX = null;
+	this.toY = null;
+	this.speed = 100;
+
 	var student = new createjs.Container();
+	this.student = student;
 	student.x = x;
 	student.y = y;
 	map.addChild(student)
@@ -16,4 +23,28 @@ function Student(map,x,y) {
 	circle.on("click", function(evt) {
 		console.log("Student clicked");
 	})
+}
+
+Student.prototype = {
+	update: function(dt) {
+		if (this.toX && this.toY && dt > 0) {
+            var dx = this.toX - this.x;   
+            var dy = this.toY - this.y;
+            var distance = Math.sqrt(dx*dx+dy*dy);
+            var distanceTravelled = this.speed * dt;
+
+            if (distance < distanceTravelled) {
+                this.x = this.toX;
+                this.y = this.toY;
+                this.toX = null;
+                this.toY = null;
+                console.log("Student arrived")
+            } else {
+                this.x += dx/distance * distanceTravelled;
+                this.y += dy/distance * distanceTravelled;
+            }
+        }
+        this.student.x = this.x
+        this.student.y = this.y;
+	}
 }

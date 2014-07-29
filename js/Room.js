@@ -1,4 +1,9 @@
 function Room(map,x,y,width,height) {
+	this.x = x;
+	this.y = y;
+	this.width = width;
+	this.height = height;
+	
 	this.type = "empty";
 	this.renderInit(map,x,y,width,height);
 	this.editable = true;
@@ -17,6 +22,13 @@ Room.prototype = {
 	enableEdit: function() {
 		if (this.editable) {
 			this.editButton.visible = true;
+		}
+	},
+
+	getRandomCoordinate: function() {
+		return {
+			x: Math.random() * this.width + this.x,
+			y: Math.random() * this.height + this.y
 		}
 	},
 

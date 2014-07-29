@@ -37,7 +37,12 @@
 
 				var roomHandler = new RoomHandler(map);
 
-				var student = new Student(map,150,150);
+				var coord = roomHandler.spawnRoom.getRandomCoordinate();
+				student = new Student(map,coord.x,coord.y);
+
+				var toCoord = roomHandler.rooms[1].getRandomCoordinate();
+				student.toX = toCoord.x;
+				student.toY = toCoord.y;
 
 				createjs.Ticker.addEventListener("tick", update);
 
@@ -59,6 +64,7 @@
 				if (key.isPressed("down")) {
 					stage.y -= 300 * dt;
 				}
+				student.update(dt);
 				stage.update();
 			}
 		</script>

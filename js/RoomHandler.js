@@ -21,4 +21,6 @@ function RoomHandler(map) {
 			room.disableEdit();
 		})
 	}.bind(this))
+
+	this.spawnRoom = entranceHall;
 }
