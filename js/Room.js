@@ -3,7 +3,7 @@ function Room(map,x,y,width,height) {
 	this.y = y;
 	this.width = width;
 	this.height = height;
-	
+
 	this.type = "empty";
 	this.renderInit(map,x,y,width,height);
 	this.editable = true;
@@ -27,8 +27,8 @@ Room.prototype = {
 
 	getRandomCoordinate: function() {
 		return {
-			x: Math.random() * this.width + this.x,
-			y: Math.random() * this.height + this.y
+			x: Math.random() * (this.width-50) + this.x + 25,
+			y: Math.random() * (this.height-50) + this.y + 25
 		}
 	},
 

@@ -7,19 +7,24 @@
     	<script src="lib/emitr.js"></script>
     	<script src="lib/JSXTransformer.js"></script>
     	<script src="lib/react.js"></script>
+
     	<script type="text/jsx" src="js/RoomEditor.js"></script>
+    	<script type="text/jsx" src="js/StudentInterface.js"></script>
 
     	<script src="js/Room.js"></script>
     	<script src="js/RoomHandler.js"></script>
+    	<script src="js/StudentHandler.js"></script>
     	<script src="js/Student.js"></script>
 
 	</head>
 	<body onload="init()">
 		<div><button onclick="emitr.trigger('editRooms')">Edit Rooms</button></div>
 		<div style="float:right" id="roomEditor"></div>
+		<div style="float:right" id="studentInteface"></div>
 		<script type="text/jsx">
 			/** @jsx React.DOM */
 			React.renderComponent(<RoomEditor/>,document.getElementById('roomEditor'));
+			React.renderComponent(<StudentInterface/>,document.getElementById('studentInteface'));
 		</script>
 		<canvas width="1000" height="400" id="demoCanvas">Could not load Canvas. Try another browser?</canvas>
 		<script>
@@ -35,14 +40,8 @@
 
 				map.x = 200;
 
-				var roomHandler = new RoomHandler(map);
-
-				var coord = roomHandler.spawnRoom.getRandomCoordinate();
-				student = new Student(map,coord.x,coord.y);
-
-				var toCoord = roomHandler.rooms[1].getRandomCoordinate();
-				student.toX = toCoord.x;
-				student.toY = toCoord.y;
+				roomHandler = new RoomHandler(map);
+				studentHandler = new StudentHandler(map, roomHandler);
 
 				createjs.Ticker.addEventListener("tick", update);
 
@@ -64,7 +63,7 @@
 				if (key.isPressed("down")) {
 					stage.y -= 300 * dt;
 				}
-				student.update(dt);
+				studentHandler.update(dt);
 				stage.update();
 			}
 		</script>

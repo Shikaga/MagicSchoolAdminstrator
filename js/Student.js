@@ -21,7 +21,7 @@ function Student(map,x,y) {
 	student.addChild(text);
 
 	circle.on("click", function(evt) {
-		console.log("Student clicked");
+		emitr.trigger("studentSelected", {student: this});
 	})
 }
 
