@@ -1,94 +1,66 @@
 <html>
 	<head>
-		<title>My first Three.js app</title>
-		<style>canvas { width: 100%; height: 100% }</style>
+		<title>Magical School Administrator</title>
+		<style></style>
+		<script src="http://code.createjs.com/createjs-2013.12.12.min.js"></script>
+    	<script src="https://rawgithub.com/madrobby/keymaster/master/keymaster.js"></script>
+    	<script src="lib/emitr.js"></script>
+    	<script src="lib/JSXTransformer.js"></script>
+    	<script src="lib/react.js"></script>
+    	<script type="text/jsx" src="js/RoomEditor.js"></script>
+
+    	<script src="js/Room.js"></script>
+    	<script src="js/RoomHandler.js"></script>
+    	<script src="js/Student.js"></script>
+
 	</head>
-	<body>
-		<script src="lib/three.min.js"></script>
+	<body onload="init()">
+		<div><button onclick="emitr.trigger('editRooms')">Edit Rooms</button></div>
+		<div style="float:right" id="roomEditor"></div>
+		<script type="text/jsx">
+			/** @jsx React.DOM */
+			React.renderComponent(<RoomEditor/>,document.getElementById('roomEditor'));
+		</script>
+		<canvas width="1000" height="400" id="demoCanvas">Could not load Canvas. Try another browser?</canvas>
 		<script>
 
-			function addRoom(scene) {
-				var width = 10;
-				var height = 4;
-				var floorDimensions = {
-					x: 0,
-					y: 0,
-					width: width,
-					height: height,
-					left: -width/2,
-					right: width/2,
-					top: height/2,
-					bottom: -height/2
-				}
-				var wallsDimensions = [
-					{xStart: floorDimensions.left,
-					 yStart: floorDimensions.top,
-					 xEnd: floorDimensions.right,
-					 yEnd: floorDimensions.top},
-					{xStart: floorDimensions.left,
-					 yStart: floorDimensions.bottom,
-					 xEnd: floorDimensions.right,
-					 yEnd: floorDimensions.bottom},
-					{xStart: floorDimensions.left,
-					 yStart: floorDimensions.top,
-					 xEnd: floorDimensions.left,
-					 yEnd: floorDimensions.bottom},
-					{xStart: floorDimensions.right,
-					 yStart: floorDimensions.top,
-					 xEnd: floorDimensions.right,
-					 yEnd: floorDimensions.bottom}
-				]
+			emitr = new emitr();
 
-				var floorGeometry = new THREE.BoxGeometry(floorDimensions.width,floorDimensions.height,0.2);
-				var material = new THREE.MeshBasicMaterial({wireframe: true,color: 0x444444});
+			var stage;
+			function init() {
+				stage = new createjs.Stage("demoCanvas");
 
-				var floor = new THREE.Mesh(floorGeometry, material);
+				var map = new createjs.Container();
+				stage.addChild(map);
 
-				wallsDimensions.forEach(function(wall) {
-					var width = Math.max(0.2,Math.abs(wall.xStart-wall.xEnd));
-					var height = Math.max(0.2,Math.abs(wall.yStart-wall.yEnd));
-					var wallGeometry = new THREE.BoxGeometry(width, height,2);
-					var wallMesh = new THREE.Mesh(wallGeometry, material);
+				map.x = 200;
 
-					wallMesh.position.x = (wall.xStart+wall.xEnd)/2;
-					wallMesh.position.y = (wall.yStart+wall.yEnd)/2;
-					wallMesh.position.z = 1;
-					scene.add(wallMesh)
-				})
-				scene.add(floor)
+				var roomHandler = new RoomHandler(map);
+
+				var student = new Student(map,150,150);
+
+				createjs.Ticker.addEventListener("tick", update);
 
 
+				// stage.addChild(new createjs.Shape()).setTransform(100,100).graphics.f("red").dc(0,0,50);
 			}
 
-
-			var scene = new THREE.Scene();
-			var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-
-			var renderer = new THREE.WebGLRenderer();
-			renderer.setSize(window.innerWidth, window.innerHeight);
-			document.body.appendChild(renderer.domElement);
-
-
-			var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
-directionalLight.position.set( 0, 1, 0 );
-scene.add( directionalLight );
-
-			var room = addRoom(scene);
-
-			camera.position.z = 10;
-			camera.position.y = -10;
-			camera.rotation.x += Math.PI/4;
-
-			var render = function () {
-				requestAnimationFrame(render);
-
-				//cube.rotation.x += 0.1;
-				//cube.rotation.y += 0.1;
-
-				renderer.render(scene, camera);
-			};
-
-			render();
+			function update(event) {
+				var dt = event.delta / 1000;
+				if (key.isPressed("left")) {
+					stage.x += 300 * dt;
+				}
+				if (key.isPressed("right")) {
+					stage.x -= 300 * dt;
+				}
+				if (key.isPressed("up")) {
+					stage.y += 300 * dt;
+				}
+				if (key.isPressed("down")) {
+					stage.y -= 300 * dt;
+				}
+				stage.update();
+			}
 		</script>
 	</body>
 </html>
