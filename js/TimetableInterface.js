@@ -21,9 +21,8 @@ TimetableInterface = React.createClass({
 	},
 
 	periodChanged: function(event) {
-		debugger;
 		this.state.timetable[event.target.attributes.getNamedItem("data").value] = event.target.value;
-		
+
 		this.setState({
 			timetable: this.state.timetable
 		})
