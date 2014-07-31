@@ -38,7 +38,7 @@ TimetableInterface = React.createClass({
 					options.push(<option value={topic}>{topic}</option>)
 				})
 				periods.push(
-			<div><select data={type} onChange={this.periodChanged} value={this.state.timetable[type]}>
+			<div><span>{type}</span><select data={type} onChange={this.periodChanged} value={this.state.timetable[type]}>
 				{options}
 			</select></div>)
 			}

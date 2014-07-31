@@ -7,17 +7,21 @@
     	<script src="lib/emitr.js"></script>
     	<script src="lib/JSXTransformer.js"></script>
     	<script src="lib/react.js"></script>
+    	<script src="lib/chance.js"></script>
 
     	<script type="text/jsx" src="js/RoomEditor.js"></script>
     	<script type="text/jsx" src="js/StudentInterface.js"></script>
     	<script type="text/jsx" src="js/TimetableInterface.js"></script>
     	<script type="text/jsx" src="js/ClockInterface.js"></script>
+    	<script type="text/jsx" src="js/MovableEntity.js"></script>
 
     	<script src="js/Room.js"></script>
     	<script src="js/RoomTypes.js"></script>
     	<script src="js/RoomHandler.js"></script>
     	<script src="js/StudentHandler.js"></script>
+    	<script src="js/Person.js"></script>
     	<script src="js/Student.js"></script>
+    	<script src="js/Teacher.js"></script>
     	<script src="js/Clock.js"></script>
     	<script src="js/Timetable.js"></script>
 
@@ -59,6 +63,8 @@
 
 				roomHandler = new RoomHandler(map);
 				var studentHandler = new StudentHandler(map, roomHandler);
+				var spawnCoords = roomHandler.spawnRoom.getRandomCoordinates();
+				var teacher = new Teacher(map, spawnCoords.x, spawnCoords.y);
 				clock = new Clock();
 
 				createjs.Ticker.addEventListener("tick", update);

@@ -4,7 +4,7 @@ StudentInterface = React.createClass({
 
 		emitr.on("studentSelected", function(data) {
 			this.setState({
-				student:data.student
+				student:data.container
 			})
 		}.bind(this))
 

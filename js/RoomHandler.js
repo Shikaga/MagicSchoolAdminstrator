@@ -5,10 +5,10 @@ function RoomHandler(map) {
 	entranceHall.editable = false;
 	this.rooms.push(entranceHall);
 
-	var rightRoom = new Room(map,300,100,200,200);
+	var rightRoom = new Room(map,300,100,200,200).setType("classroom");
 	this.rooms.push(rightRoom);
 
-	var leftRoom = new Room(map,-100,100,200,200);
+	var leftRoom = new Room(map,-100,100,200,200).setType("dorm");
 	this.rooms.push(leftRoom);
 
 	var rightRoom2 = new Room(map,300,-100,200,200);
@@ -58,13 +58,13 @@ function RoomHandler(map) {
 	this.rooms.push(new Room(map,300,-500,200,200));
 
 	emitr.on("editRooms", function() {
-		emitr.trigger("pauseClock");
+		//emitr.trigger("pauseClock");
 		this.rooms.forEach(function(room) {
 			room.enableEdit();
 		})
 	}.bind(this))
 	emitr.on("editRoomsComplete", function() {
-		emitr.trigger("resumeClock");
+		//emitr.trigger("resumeClock");
 		this.rooms.forEach(function(room) {
 			room.disableEdit();
 		})
