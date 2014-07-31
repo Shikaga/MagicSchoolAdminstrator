@@ -2,29 +2,38 @@
 	<head>
 		<title>Magical School Administrator</title>
 		<style></style>
-		<script src="http://code.createjs.com/createjs-2013.12.12.min.js"></script>
-    	<script src="https://rawgithub.com/madrobby/keymaster/master/keymaster.js"></script>
+		<script src="lib/createjs-2013.12.12.min.js"></script>
+    	<script src="lib	/keymaster.js"></script>
     	<script src="lib/emitr.js"></script>
     	<script src="lib/JSXTransformer.js"></script>
     	<script src="lib/react.js"></script>
 
     	<script type="text/jsx" src="js/RoomEditor.js"></script>
     	<script type="text/jsx" src="js/StudentInterface.js"></script>
+    	<script type="text/jsx" src="js/TimetableInterface.js"></script>
 
     	<script src="js/Room.js"></script>
     	<script src="js/RoomHandler.js"></script>
     	<script src="js/StudentHandler.js"></script>
     	<script src="js/Student.js"></script>
+    	<script src="js/Clock.js"></script>
+    	<script src="js/Timetable.js"></script>
+
 
 	</head>
 	<body onload="init()">
-		<div><button onclick="emitr.trigger('editRooms')">Edit Rooms</button></div>
+		<div>
+			<button onclick="emitr.trigger('editRooms')">Edit Rooms</button>
+			<button onclick="emitr.trigger('editTimetable')">Edit Timetable</button>
+		</div>
 		<div style="float:right" id="roomEditor"></div>
 		<div style="float:right" id="studentInteface"></div>
+		<div style="float:right" id="timetableInterface"></div>
 		<script type="text/jsx">
 			/** @jsx React.DOM */
 			React.renderComponent(<RoomEditor/>,document.getElementById('roomEditor'));
 			React.renderComponent(<StudentInterface/>,document.getElementById('studentInteface'));
+			React.renderComponent(<TimetableInterface/>,document.getElementById('timetableInterface'));
 		</script>
 		<canvas width="1000" height="400" id="demoCanvas">Could not load Canvas. Try another browser?</canvas>
 		<script>
@@ -41,7 +50,8 @@
 				map.x = 200;
 
 				roomHandler = new RoomHandler(map);
-				studentHandler = new StudentHandler(map, roomHandler);
+				var studentHandler = new StudentHandler(map, roomHandler);
+				clock = new Clock();
 
 				createjs.Ticker.addEventListener("tick", update);
 
@@ -63,7 +73,7 @@
 				if (key.isPressed("down")) {
 					stage.y -= 300 * dt;
 				}
-				studentHandler.update(dt);
+				clock.update(event.delta);
 				stage.update();
 			}
 		</script>

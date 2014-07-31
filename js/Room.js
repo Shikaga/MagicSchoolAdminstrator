@@ -25,7 +25,7 @@ Room.prototype = {
 		}
 	},
 
-	getRandomCoordinate: function() {
+	getRandomCoordinates: function() {
 		return {
 			x: Math.random() * (this.width-50) + this.x + 25,
 			y: Math.random() * (this.height-50) + this.y + 25
@@ -39,6 +39,9 @@ Room.prototype = {
 	setType: function(type) {
 		this.type = type;
 		this.render();
+		emitr.trigger("newRoom", {
+			room: this
+		})
 		return this;
 	},
 
