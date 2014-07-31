@@ -51,8 +51,11 @@
 
 				var map = new createjs.Container();
 				stage.addChild(map);
+				map.scaleX = 0.5;
+				map.scaleY = 0.5;
 
-				map.x = 200;
+				map.x = 350;
+				map.y = 250;
 
 				roomHandler = new RoomHandler(map);
 				var studentHandler = new StudentHandler(map, roomHandler);
