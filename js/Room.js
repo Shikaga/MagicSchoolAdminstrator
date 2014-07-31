@@ -10,14 +10,6 @@ function Room(map,x,y,width,height) {
 	this.render();
 }
 
-Room.types = {
-	"empty": {name: "Empty"},
-	"entrancehall": {name: "Entrance Hall"},
-	"classroom": {name: "Classroom"},
-	"dorm": {name: "Dormitary"},
-	"diningroom": {name: "Dining Room"}
-}
-
 Room.prototype = {
 	enableEdit: function() {
 		if (this.editable) {
@@ -38,6 +30,7 @@ Room.prototype = {
 
 	setType: function(type) {
 		this.type = type;
+		this.setTypeColor();
 		this.render();
 		emitr.trigger("newRoom", {
 			room: this
@@ -45,9 +38,14 @@ Room.prototype = {
 		return this;
 	},
 
+	setTypeColor: function() {
+		this.square.graphics.beginFill(RoomTypes[this.type].backgroundColor).drawRect(0,0,this.width,this.height);
+		this.square.graphics.beginFill(RoomTypes[this.type].foregroundColor).drawRect(5,5,this.width-10,this.height-10);
+	},
+
 	render: function() {
-		this.roomTypeText.text = Room.types[this.type].name;
-		this.editText.text = "Edit " + Room.types[this.type].name;
+		this.roomTypeText.text = RoomTypes[this.type].name;
+		this.editText.text = "Edit " + RoomTypes[this.type].name;
 	},
 
 	renderInit: function(map,x,y,width,height) {
@@ -56,10 +54,9 @@ Room.prototype = {
 		container.y = y;
 		map.addChild(container);
 
-		var square = new createjs.Shape();
-		square.graphics.beginFill("#888888").drawRect(0,0,width,height);
-		square.graphics.beginFill("#AAAAAA").drawRect(5,5,width-10,height-10);
-		container.addChild(square);
+		this.square = new createjs.Shape();
+		this.setTypeColor();
+		container.addChild(this.square);
 
 
 		this.roomTypeText = new createjs.Text(null, "16px Arial", "#FFF");

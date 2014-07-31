@@ -34,8 +34,8 @@ RoomEditor = React.createClass({
 	render: function() {
 		var type;
 		options = [];
-		for (var type in Room.types) {
-			options.push(<option value={type}>{Room.types[type].name}</option>)
+		for (var type in RoomTypes) {
+			options.push(<option value={type}>{RoomTypes[type].name}</option>)
 		}
 		var roomEditor = (<div>
 			<h1>Room Editor</h1>
