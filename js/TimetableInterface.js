@@ -4,7 +4,8 @@ TimetableInterface = React.createClass({
 
 		emitr.on("showTimetable", function(data) {
 			this.setState({
-				timetable:data.timetable.timetable
+				timetable:data.timetable.timetable,
+				syllabus: data.timetable.syllabus
 			})
 		}.bind(this))
 
@@ -19,12 +20,28 @@ TimetableInterface = React.createClass({
 		})
 	},
 
+	periodChanged: function(event) {
+		debugger;
+		this.state.timetable[event.target.attributes.getNamedItem("data").value] = event.target.value;
+		
+		this.setState({
+			timetable: this.state.timetable
+		})
+	},
+
 	render: function() {
 		var timetableInterface;
 		if (this.state.timetable) {
 			var periods = [];
 			for (var type in this.state.timetable) {
-				periods.push(<div>{this.state.timetable[type]}</div>)
+				var options = [];
+				this.state.syllabus.forEach(function(topic) {
+					options.push(<option value={topic}>{topic}</option>)
+				})
+				periods.push(
+			<div><select data={type} onChange={this.periodChanged} value={this.state.timetable[type]}>
+				{options}
+			</select></div>)
 			}
 			timetableInterface = (<div>
 				<h1>Timetable</h1>
