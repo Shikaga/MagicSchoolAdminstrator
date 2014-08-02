@@ -1,4 +1,5 @@
-function Room(map,x,y,width,height) {
+function Room(map,objectPlacer,x,y,width,height) {
+	this.op = objectPlacer;
 	this.x = x;
 	this.y = y;
 	this.width = width;
@@ -7,8 +8,10 @@ function Room(map,x,y,width,height) {
 	this.type = "empty";
 	this.renderInit(map,x,y,width,height);
 	this.editable = true;
-	this.render();
 	this.state = "normal";
+
+
+	this.render();
 }
 
 Room.prototype = {
@@ -30,12 +33,14 @@ Room.prototype = {
 	},
 
 	enableSelected: function() {
+		this.op.setRoom(this);
 		this.state = "selected";
-		this.op = new ObjectPlacer(this);
 		this.render();
+		emitr.trigger("editRoom", {room:this})
 	},
 
 	disableSelected: function() {
+		this.op.clearRoom();
 		this.state = "normal";
 		this.render();
 	},
@@ -94,8 +99,7 @@ Room.prototype = {
 		this.container.addChild(this.editButton);
 		this.editButton.visible = false;
 		this.editButton.on("click", function(event) {
-			console.log("EDIT CLICKED!")
-			emitr.trigger("editRoom", {room:this});
+			emitr.trigger("selectRoom", {room:this});
 		}.bind(this))
 		}
 }
