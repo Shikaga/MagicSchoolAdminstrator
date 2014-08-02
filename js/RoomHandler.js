@@ -3,64 +3,53 @@ function RoomHandler(map) {
 
 	var op = new ItemPlacer();
 
-	var entranceHall = new Room(map,op,100,100,200,200).setType("entrancehall")
-	entranceHall.editable = false;
-	this.rooms.push(entranceHall);
+	var createRoom = function(x,y,typeString,editable) {
+		if (typeString == null) typeString = "empty";
+		var room = new Room(map,op,x,y,200,200).setType(RoomTypes[typeString])
+		if (editable == false) {
+			room.editable = false;
+		}
+		return room;
+	}.bind(this)
 
-	var rightRoom = new Room(map,op,300,100,200,200).setType("classroom");
-	this.rooms.push(rightRoom);
+	var createAndAddRoom = function(x,y,typeString,editable) {
+		var room = createRoom(x,y,typeString,editable);
+		this.rooms.push(room);
+		return room;
+	}.bind(this)
 
-	var leftRoom = new Room(map,op,-100,100,200,200).setType("dorm");
-	this.rooms.push(leftRoom);
+	var entranceHall = createAndAddRoom(100,100,"entrancehall", false);
+	createAndAddRoom(300,100,"classroom");
+	createAndAddRoom(-100,100,"dorm");
+	createAndAddRoom(300,-100,"classroom");
 
-	var rightRoom2 = new Room(map,op,300,-100,200,200);
-	this.rooms.push(rightRoom2);
+	createAndAddRoom(-100,-100);
 
-	var leftRoom2 = new Room(map,op,-100,-100,200,200);
-	this.rooms.push(leftRoom2);
+	createAndAddRoom(100,-100,"entrancehall", false);
+	createAndAddRoom(100,-300,"entrancehall", false);
+	createAndAddRoom(-100,-300,"entrancehall", false);
+	createAndAddRoom(-300,-300,"entrancehall", false);
+	createAndAddRoom(300,-300,"entrancehall", false);
+	createAndAddRoom(500,-300,"entrancehall", false);
 
-	var hall1 = new Room(map,op,100,-100,200,200).setType("entrancehall")
-	hall1.editable = false;
-	this.rooms.push(hall1);
+	createAndAddRoom(100,-500);
 
-	var hall2 = new Room(map,op,100,-300,200,200).setType("entrancehall")
-	hall2.editable = false;
-	this.rooms.push(hall2);
 
-	this.rooms.push(new Room(map,op,100,-500,200,200));
+	createAndAddRoom(-300,-100);
+	createAndAddRoom(-500,-100);
+	createAndAddRoom(-500,-300);
+	createAndAddRoom(-500,-500);
+	createAndAddRoom(-300,-500);
+	createAndAddRoom(-100,-500);
 
-	var leftWingHall1 = new Room(map,op,-100,-300,200,200).setType("entrancehall")
-	leftWingHall1.editable = false;
-	this.rooms.push(leftWingHall1);
-
-	var leftWingHall2 = new Room(map,op,-300,-300,200,200).setType("entrancehall")
-	leftWingHall1.editable = false;
-	this.rooms.push(leftWingHall1);
-
-	this.rooms.push(new Room(map,op,-300,-100,200,200));
-	this.rooms.push(new Room(map,op,-500,-100,200,200));
-	this.rooms.push(new Room(map,op,-500,-300,200,200));
-	this.rooms.push(new Room(map,op,-500,-500,200,200));
-	this.rooms.push(new Room(map,op,-300,-500,200,200));
-	this.rooms.push(new Room(map,op,-100,-500,200,200));
-
-	var rightWingHall1 = new Room(map,op,300,-300,200,200).setType("entrancehall")
-	rightWingHall1.editable = false;
-	this.rooms.push(rightWingHall1);
-
-	var rightWingHall2 = new Room(map,op,500,-300,200,200).setType("entrancehall")
-	rightWingHall2.editable = false;
-	this.rooms.push(rightWingHall2);
-
-	this.rooms.push(new Room(map,op,500,-100,200,200));
-	this.rooms.push(new Room(map,op,700,-100,200,200));
-	this.rooms.push(new Room(map,op,700,-300,200,200));
-	this.rooms.push(new Room(map,op,700,-500,200,200));
-	this.rooms.push(new Room(map,op,500,-500,200,200));
-	this.rooms.push(new Room(map,op,300,-500,200,200));
+	createAndAddRoom(500,-100);
+	createAndAddRoom(700,-100);
+	createAndAddRoom(700,-300);
+	createAndAddRoom(700,-500);
+	createAndAddRoom(500,-500);
+	createAndAddRoom(300,-500);
 
 	emitr.on("editRooms", function() {
-		//emitr.trigger("pauseClock");
 		this.rooms.forEach(function(room) {
 			room.enableEdit();
 		})

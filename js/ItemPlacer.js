@@ -18,8 +18,13 @@ ItemPlacer.prototype.setRoom = function(room) {
 
 	this.gridSize = 20;
 
-	this.object = "bed";
-	this.objects = DormItems;
+	this.objects = [];
+	this.object = null;
+
+	if (room.type == "dorm") {
+		this.object = "bed";
+		this.objects = DormItems;	
+	}
 
 
 	this.clearListeners();
@@ -66,7 +71,7 @@ ItemPlacer.prototype.move = function(x,y) {
 }
 
 ItemPlacer.prototype.newObject = function(x,y) {
-	if (this.container == null) {
+	if (this.container == null && this.object) {
 		console.log("Placing " + this.object);
 		var legalCoords = this.getGridPosition(x,y)
 		if (legalCoords) {

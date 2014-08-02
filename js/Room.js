@@ -5,7 +5,7 @@ function Room(map,objectPlacer,x,y,width,height) {
 	this.width = width;
 	this.height = height;
 
-	this.type = "empty";
+	this.type = RoomTypes.empty;
 	this.renderInit(map,x,y,width,height);
 	this.editable = true;
 	this.state = "normal";
@@ -62,20 +62,20 @@ Room.prototype = {
 	},
 
 	setTypeColor: function() {
-		this.square.graphics.beginFill(RoomTypes[this.type].backgroundColor).drawRect(0,0,this.width,this.height);
-		this.square.graphics.beginFill(RoomTypes[this.type].foregroundColor).drawRect(5,5,this.width-10,this.height-10);
+		this.square.graphics.beginFill(this.type.backgroundColor).drawRect(0,0,this.width,this.height);
+		this.square.graphics.beginFill(this.type.foregroundColor).drawRect(5,5,this.width-10,this.height-10);
 	},
 
 	render: function() {
 		switch (this.state) {
 			case "normal":
-				this.roomTypeText.text = RoomTypes[this.type].name;
+				this.roomTypeText.text = this.type.name;
 				break;
 			case "selected":
 				this.roomTypeText.text = "Edit " + RoomTypes[this.type].name;
 				break;
 		}
-		this.editText.text = "Edit " + RoomTypes[this.type].name;
+		this.editText.text = "Edit " + this.type.name;
 	},
 
 	renderInit: function(map,x,y,width,height) {

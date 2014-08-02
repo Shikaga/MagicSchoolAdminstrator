@@ -27,6 +27,7 @@ RoomTypes = {
 		name: "Dormitary",
 		backgroundColor: "#003773",
 		foregroundColor: "#5DA0E8",
+		items: DormItems,
 		studentsSupported: function(room) {
 			return 6;
 		}

@@ -26,18 +26,23 @@ StudentGroup.prototype = {
 
 function StudentHandler(map, roomHandler) {
 	this.students = [];
-
-	var firstYears = new StudentGroup();
+	this.firstYears = new StudentGroup();
 
 	for (var i=0; i < 6; i++) {
-		var coord = roomHandler.spawnRoom.getRandomCoordinates();
-		var student = new Student(map,coord.x,coord.y);
-		firstYears.addStudent(student);
-		this.students.push(student);
+		this.addStudent(map);
 	}
+
+	emitr.on("addStudent", function() {
+		this.addStudent(map);
+	}.bind(this))
 
 }
 
 StudentHandler.prototype = {
-
+	addStudent: function(map) {
+		var coord = roomHandler.spawnRoom.getRandomCoordinates();
+		var student = new Student(map,coord.x,coord.y);
+		this.firstYears.addStudent(student);
+		this.students.push(student);
+	}
 }
