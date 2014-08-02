@@ -34,7 +34,6 @@ function RoomHandler(map) {
 
 	createAndAddRoom(100,-500);
 
-
 	createAndAddRoom(-300,-100);
 	createAndAddRoom(-500,-100);
 	createAndAddRoom(-500,-300);
@@ -67,7 +66,7 @@ function RoomHandler(map) {
 RoomHandler.prototype = {
 	getRoom: function(type) {
 		for (var i=0; i < this.rooms.length; i++) {
-			if (this.rooms[i].type == type) {
+			if (this.rooms[i].type.id == type) {
 				return this.rooms[i];
 			}
 		}
@@ -76,8 +75,9 @@ RoomHandler.prototype = {
 		for (var i=0; i < this.rooms.length; i++) {
 			var room = this.rooms[i];
 			for (var j=0; j < room.items.length; j++) {
+				debugger;
 				var item = room.items[j];
-				if (item.name == "Bed" && item.owner == null) {
+				if (item.type.name == "Bed" && item.owner == null) {
 					return item;
 				}
 			}

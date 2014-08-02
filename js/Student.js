@@ -36,6 +36,7 @@ Student.prototype = {
 		} else {
 			this.bed = bed;
 			this.bed.owner = this;
+			debugger;
 		}
 	},
 
@@ -53,6 +54,7 @@ Student.prototype = {
 			if (activity == "freetime") {
 				this.goToBed();
 			} else if (activity == "class") {
+				console.log("CLASS!")
 				var room = this.group.getRoomToBeIn(hour);
 				if (room != null) {
 					this.person.goToRoom(room);

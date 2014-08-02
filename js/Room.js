@@ -72,7 +72,7 @@ Room.prototype = {
 				this.roomTypeText.text = this.type.name;
 				break;
 			case "selected":
-				this.roomTypeText.text = "Edit " + RoomTypes[this.type].name;
+				this.roomTypeText.text = "Edit " + this.type.name;
 				break;
 		}
 		this.editText.text = "Edit " + this.type.name;

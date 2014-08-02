@@ -1,7 +1,8 @@
 function Item(ItemPlacer,type,container,room) {
 	this.container = container;
 	this.room = room;
-	this.name = type;
+	this.type = type;
+	this.owner = null;
 
 	this.container.on("mousedown", function(event) {
 		event.stopImmediatePropagation();
@@ -18,14 +19,8 @@ ItemPlacer.prototype.setRoom = function(room) {
 
 	this.gridSize = 20;
 
-	this.objects = [];
-	this.object = null;
-
-	if (room.type == "dorm") {
-		this.object = "bed";
-		this.objects = DormItems;	
-	}
-
+	this.itemTypes = room.type.items;
+	this.itemTypeSelected = room.type.items[Object.keys(room.type.items)[0]];
 
 	this.clearListeners();
 
@@ -34,11 +29,11 @@ ItemPlacer.prototype.setRoom = function(room) {
 	}.bind(this))
 
 	this.mousedown = this.room.container.on("mousedown", function(event) {
-		this.newObject(event.localX, event.localY);
+		this.newItem(event.localX, event.localY);
 	}.bind(this))
 
 	this.pressup = this.room.container.on("pressup", function(event) {
-		this.objectPlaced(event.localX, event.localY);
+		this.itemPlaced(event.localX, event.localY);
 	}.bind(this))
 }
 
@@ -70,25 +65,24 @@ ItemPlacer.prototype.move = function(x,y) {
 	}
 }
 
-ItemPlacer.prototype.newObject = function(x,y) {
-	if (this.container == null && this.object) {
-		console.log("Placing " + this.object);
+ItemPlacer.prototype.newItem = function(x,y) {
+	if (this.container == null && this.itemTypeSelected) {
+		console.log("Placing " + this.itemTypeSelected);
 		var legalCoords = this.getGridPosition(x,y)
 		if (legalCoords) {
-			var itemType = this.objects[this.object];
 
-			this.container = itemType.getContainer();
+			this.container = this.itemTypeSelected.getContainer();
 			this.container.x = legalCoords.x;
 			this.container.y = legalCoords.y;
 
-			var item = new Item(this, itemType.name, this.container, this.room)
+			var item = new Item(this, this.itemTypeSelected, this.container, this.room)
 			this.room.addItem(item);
 			this.room.container.addChild(this.container);
 		}
 	}
 }
 
-ItemPlacer.prototype.objectPlaced = function(x,y) {
+ItemPlacer.prototype.itemPlaced = function(x,y) {
 	if (this.container) {
 		this.container = null;
 	}
