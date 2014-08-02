@@ -63,11 +63,11 @@ function RoomHandler(map) {
 			room.enableEdit();
 		})
 	}.bind(this))
-	emitr.on("editRoomsComplete", function() {
-		//emitr.trigger("resumeClock");
+	emitr.on("editRoom", function(data) {
 		this.rooms.forEach(function(room) {
 			room.disableEdit();
 		})
+		data.room.enableSelected();
 	}.bind(this))
 
 	this.spawnRoom = entranceHall;

@@ -8,6 +8,7 @@ function Room(map,x,y,width,height) {
 	this.renderInit(map,x,y,width,height);
 	this.editable = true;
 	this.render();
+	this.state = "normal";
 }
 
 Room.prototype = {
@@ -28,6 +29,17 @@ Room.prototype = {
 		this.editButton.visible = false;
 	},
 
+	enableSelected: function() {
+		this.state = "selected";
+		this.op = new ObjectPlacer(this);
+		this.render();
+	},
+
+	disableSelected: function() {
+		this.state = "normal";
+		this.render();
+	},
+
 	setType: function(type) {
 		this.type = type;
 		this.setTypeColor();
@@ -44,25 +56,32 @@ Room.prototype = {
 	},
 
 	render: function() {
-		this.roomTypeText.text = RoomTypes[this.type].name;
+		switch (this.state) {
+			case "normal":
+				this.roomTypeText.text = RoomTypes[this.type].name;
+				break;
+			case "selected":
+				this.roomTypeText.text = "Edit " + RoomTypes[this.type].name;
+				break;
+		}
 		this.editText.text = "Edit " + RoomTypes[this.type].name;
 	},
 
 	renderInit: function(map,x,y,width,height) {
-		var container = new createjs.Container();
-		container.x = x;
-		container.y = y;
-		map.addChild(container);
+		this.container = new createjs.Container();
+		this.container.x = x;
+		this.container.y = y;
+		map.addChild(this.container);
 
 		this.square = new createjs.Shape();
 		this.setTypeColor();
-		container.addChild(this.square);
+		this.container.addChild(this.square);
 
 
 		this.roomTypeText = new createjs.Text(null, "16px Arial", "#FFF");
 		this.roomTypeText.x = 30;
 		this.roomTypeText.y = 30;
-		container.addChild(this.roomTypeText);
+		this.container.addChild(this.roomTypeText);
 
 		this.editButton = new createjs.Container();
 		var editRectangle = new createjs.Shape();
@@ -72,7 +91,7 @@ Room.prototype = {
 		this.editText.y = 30;
 		this.editButton.addChild(editRectangle);
 		this.editButton.addChild(this.editText);
-		container.addChild(this.editButton);
+		this.container.addChild(this.editButton);
 		this.editButton.visible = false;
 		this.editButton.on("click", function(event) {
 			console.log("EDIT CLICKED!")

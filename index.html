@@ -14,6 +14,7 @@
     	<script type="text/jsx" src="js/TimetableInterface.js"></script>
     	<script type="text/jsx" src="js/ClockInterface.js"></script>
     	<script type="text/jsx" src="js/MovableEntity.js"></script>
+    	<script type="text/jsx" src="js/ItemsInterface.js"></script>
 
     	<script src="js/Room.js"></script>
     	<script src="js/RoomTypes.js"></script>
@@ -24,6 +25,7 @@
     	<script src="js/Teacher.js"></script>
     	<script src="js/Clock.js"></script>
     	<script src="js/Timetable.js"></script>
+    	<script src="js/ObjectPlacer.js"></script>
 
 
 	</head>
@@ -31,22 +33,24 @@
 		<div>
 			<button onclick="emitr.trigger('editRooms')">Edit Rooms</button>
 			<button onclick="emitr.trigger('editTimetable')">Edit Timetable</button>
+			<button onclick="emitr.trigger('showItemsMenu')">Edit Objects</button>
 			<span id="clockInterface"></span>
 		</div>
 		<div style="float:right" id="roomEditor"></div>
 		<div style="float:right" id="studentInteface"></div>
 		<div style="float:right" id="timetableInterface"></div>
 		<div style="float:left" id="clockInterface"></div>
+		<div style="float:left" id="itemsInterface"></div>
 		<script type="text/jsx">
 			/** @jsx React.DOM */
 			React.renderComponent(<RoomEditor/>,document.getElementById('roomEditor'));
 			React.renderComponent(<StudentInterface/>,document.getElementById('studentInteface'));
 			React.renderComponent(<TimetableInterface/>,document.getElementById('timetableInterface'));
 			React.renderComponent(<ClockInterface/>,document.getElementById('clockInterface'));
+			React.renderComponent(<ItemsInterface/>,document.getElementById('itemsInterface'));
 		</script>
 		<canvas width="1000" height="400" id="demoCanvas">Could not load Canvas. Try another browser?</canvas>
 		<script>
-
 			emitr = new emitr();
 
 			var stage;

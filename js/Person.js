@@ -35,7 +35,7 @@ Person.prototype = {
 		circle.graphics.beginFill(this.color).drawCircle(0, 0, 10);
 		container.addChild(circle);
 
-		var text = new createjs.Text(this.type, "16px Arial", "#000");
+		var text = new createjs.Text(this.name, "16px Arial", "#000");
 		text.x = 15;
 		text.y = -8;
 		container.addChild(text);
