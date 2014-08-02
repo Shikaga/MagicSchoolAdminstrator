@@ -82,5 +82,16 @@ RoomHandler.prototype = {
 				return this.rooms[i];
 			}
 		}
+	},
+	getFreeBed: function() {
+		for (var i=0; i < this.rooms.length; i++) {
+			var room = this.rooms[i];
+			for (var j=0; j < room.items.length; j++) {
+				var item = room.items[j];
+				if (item.name == "Bed" && item.owner == null) {
+					return item;
+				}
+			}
+		}
 	}
 }

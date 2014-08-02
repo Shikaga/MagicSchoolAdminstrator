@@ -17,6 +17,10 @@ StudentGroup.prototype = {
 			room = roomHandler.getRoom("dorm")
 		}
 		return room;
+	},
+
+	getCurrentActivity: function(hour) {
+		return this.syllabus.timetable[hour];
 	}
 }
 

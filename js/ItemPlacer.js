@@ -1,6 +1,7 @@
-function Item(ItemPlacer,container, room) {
+function Item(ItemPlacer,type,container,room) {
 	this.container = container;
 	this.room = room;
+	this.name = type;
 
 	this.container.on("mousedown", function(event) {
 		event.stopImmediatePropagation();
@@ -70,12 +71,12 @@ ItemPlacer.prototype.newObject = function(x,y) {
 		var legalCoords = this.getGridPosition(x,y)
 		if (legalCoords) {
 			var itemType = this.objects[this.object];
-			
+
 			this.container = itemType.getContainer();
 			this.container.x = legalCoords.x;
 			this.container.y = legalCoords.y;
 
-			var item = new Item(this, this.container, this.room)
+			var item = new Item(this, itemType.name, this.container, this.room)
 			this.room.addItem(item);
 			this.room.container.addChild(this.container);
 		}

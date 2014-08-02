@@ -24,6 +24,13 @@ Person.prototype = {
 		this.moveableEntity.setNewDestination(coords);
 	},
 
+	goToItem: function(item) {
+		this.moveableEntity.setNewDestination({
+			x: item.room.x + item.container.x,
+			y: item.room.y + item.container.y
+		});
+	},
+
 	renderInit: function(map,moveableEntity) {
 		var container = new createjs.Container();
 		this.container = container;
