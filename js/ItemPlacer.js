@@ -1,29 +1,29 @@
-function Item(objectPlacer,container, room) {
+function Item(ItemPlacer,container, room) {
 	this.container = container;
 	this.room = room;
 
 	this.container.on("mousedown", function(event) {
 		event.stopImmediatePropagation();
-		objectPlacer.container = this.container;
+		ItemPlacer.container = this.container;
 	}.bind(this))
 }
 
-function ObjectPlacer(room) {
+function ItemPlacer(room) {
 	
 }
 
-ObjectPlacer.prototype.setRoom = function(room) {
+ItemPlacer.prototype.setRoom = function(room) {
 	this.room = room;
 
 	this.gridSize = 20;
 
-	this.object = "bin";
-	this.objects = ["chair","desk", "bin"]
+	this.object = "bed";
+	this.objects = DormItems;
+
 
 	this.clearListeners();
 
 	this.pressmove = this.room.container.on("pressmove", function(event) {
-		console.log("??", this.container)
 		this.move(event.localX, event.localY);
 	}.bind(this))
 
@@ -36,17 +36,17 @@ ObjectPlacer.prototype.setRoom = function(room) {
 	}.bind(this))
 }
 
-ObjectPlacer.prototype.clearRoom = function() {
+ItemPlacer.prototype.clearRoom = function() {
 	this.clearListeners();
 }
 
-ObjectPlacer.prototype.clearListeners = function() {
+ItemPlacer.prototype.clearListeners = function() {
 	this.room.container.off("mousedown", this.mousedown);
 	this.room.container.off("pressmove", this.pressmove);
 	this.room.container.off("pressup", this.pressup);
 }
 
-ObjectPlacer.prototype.getGridPosition = function(x,y) {
+ItemPlacer.prototype.getGridPosition = function(x,y) {
 	x = Math.max(x,20); x = Math.min(x,this.room.width-20);
 	y = Math.max(y,20); y = Math.min(y,this.room.height-20);
 	var xGrid = Math.round(x / this.gridSize) * this.gridSize;
@@ -54,7 +54,7 @@ ObjectPlacer.prototype.getGridPosition = function(x,y) {
 	return {x: xGrid, y: yGrid};
 }
 
-ObjectPlacer.prototype.move = function(x,y) {
+ItemPlacer.prototype.move = function(x,y) {
 	var legalCoords = this.getGridPosition(x,y);
 	if (legalCoords) {
 		if (this.container) {
@@ -64,29 +64,25 @@ ObjectPlacer.prototype.move = function(x,y) {
 	}
 }
 
-ObjectPlacer.prototype.newObject = function(x,y) {
+ItemPlacer.prototype.newObject = function(x,y) {
 	if (this.container == null) {
 		console.log("Placing " + this.object);
 		var legalCoords = this.getGridPosition(x,y)
 		if (legalCoords) {
-			this.container = new createjs.Container();
-			this.circle = new createjs.Shape();
-			this.circle.graphics.beginFill("#000000").drawCircle(0, 0, 10);
-			var editText = new createjs.Text(this.object, "16px Arial", "#FFF");
-			editText.x = 20;
-			editText.y = -10;
-			this.container.addChild(editText);
+			var itemType = this.objects[this.object];
+			
+			this.container = itemType.getContainer();
 			this.container.x = legalCoords.x;
 			this.container.y = legalCoords.y;
-			this.container.addChild(this.circle);
-			var container = this.container;
-			var object = new Item(this, this.container, this.room)
+
+			var item = new Item(this, this.container, this.room)
+			this.room.addItem(item);
 			this.room.container.addChild(this.container);
 		}
 	}
 }
 
-ObjectPlacer.prototype.objectPlaced = function(x,y) {
+ItemPlacer.prototype.objectPlaced = function(x,y) {
 	if (this.container) {
 		this.container = null;
 	}

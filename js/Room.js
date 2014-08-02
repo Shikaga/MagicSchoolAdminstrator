@@ -10,6 +10,8 @@ function Room(map,objectPlacer,x,y,width,height) {
 	this.editable = true;
 	this.state = "normal";
 
+	this.items = [];
+
 
 	this.render();
 }
@@ -19,6 +21,10 @@ Room.prototype = {
 		if (this.editable) {
 			this.editButton.visible = true;
 		}
+	},
+
+	addItem: function(item) {
+		this.items.push(item);
 	},
 
 	getRandomCoordinates: function() {

@@ -1,7 +1,7 @@
 function RoomHandler(map) {
 	this.rooms = [];
 
-	var op = new ObjectPlacer();
+	var op = new ItemPlacer();
 
 	var entranceHall = new Room(map,op,100,100,200,200).setType("entrancehall")
 	entranceHall.editable = false;
