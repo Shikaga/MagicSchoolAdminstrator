@@ -27,6 +27,14 @@ Room.prototype = {
 		this.items.push(item);
 	},
 
+	containsCoords: function(coords) {
+		if (coords.x < this.x) return false;
+		if (coords.x > this.x + this.width) return false;
+		if (coords.y < this.y) return false;
+		if (coords.y > this.y + this.height) return false;
+		return true;
+	},
+
 	getRandomCoordinates: function() {
 		return {
 			x: Math.random() * (this.width-50) + this.x + 25,

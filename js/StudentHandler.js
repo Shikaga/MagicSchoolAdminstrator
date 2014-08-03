@@ -28,7 +28,7 @@ function StudentHandler(map, roomHandler) {
 	this.students = [];
 	this.firstYears = new StudentGroup();
 
-	for (var i=0; i < 6; i++) {
+	for (var i=0; i < 1; i++) {
 		this.addStudent(map);
 	}
 

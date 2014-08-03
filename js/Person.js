@@ -19,9 +19,15 @@ Person.prototype = {
 		this.container.y = this.moveableEntity.y;
 	},
 
+	getRoomTypeIn: function() {
+		return roomHandler.getRoomTypeIn({x: this.moveableEntity.x, y: this.moveableEntity.y})
+	},
+
 	goToRoom: function(room) {
-		var coords = room.getRandomCoordinates();
-		this.moveableEntity.setNewDestination(coords);
+		if (room != null) {
+			var coords = room.getRandomCoordinates();
+			this.moveableEntity.setNewDestination(coords);
+		}
 	},
 
 	goToItem: function(item) {

@@ -71,12 +71,42 @@ RoomHandler.prototype = {
 			}
 		}
 	},
+	getRoomTypeIn: function(coords) {
+		for (var i=0; i < this.rooms.length; i++) {
+			var room = this.rooms[i];
+			if (room.containsCoords(coords)) {
+				return room.type;
+			}
+		}
+	},
 	getFreeBed: function() {
 		for (var i=0; i < this.rooms.length; i++) {
 			var room = this.rooms[i];
 			for (var j=0; j < room.items.length; j++) {
 				var item = room.items[j];
 				if (item.type.name == "Bed" && item.owner == null) {
+					return item;
+				}
+			}
+		}
+	},
+	getBookshelf: function() {
+		for (var i=0; i < this.rooms.length; i++) {
+			var room = this.rooms[i];
+			for (var j=0; j < room.items.length; j++) {
+				var item = room.items[j];
+				if (item.type.id == "bookshelf") {
+					return item;
+				}
+			}
+		}
+	},
+	getChair: function() {
+		for (var i=0; i < this.rooms.length; i++) {
+			var room = this.rooms[i];
+			for (var j=0; j < room.items.length; j++) {
+				var item = room.items[j];
+				if (item.type.id == "chair") {
 					return item;
 				}
 			}
