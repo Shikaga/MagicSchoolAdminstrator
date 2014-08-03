@@ -75,7 +75,6 @@ RoomHandler.prototype = {
 		for (var i=0; i < this.rooms.length; i++) {
 			var room = this.rooms[i];
 			for (var j=0; j < room.items.length; j++) {
-				debugger;
 				var item = room.items[j];
 				if (item.type.name == "Bed" && item.owner == null) {
 					return item;

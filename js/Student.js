@@ -25,18 +25,17 @@ Student.prototype = {
 		if (this.bed !== null) {
 			this.person.goToItem(this.bed);
 		} else {
-			console.log("There is no bed to go to!");
+			//console.log("There is no bed to go to!");
 		}
 	},
 
 	findBed: function() {
 		var bed = roomHandler.getFreeBed();
 		if (bed == null) {
-			console.log("I can't find a bed!")
+			//console.log("I can't find a bed!")
 		} else {
 			this.bed = bed;
 			this.bed.owner = this;
-			debugger;
 		}
 	},
 

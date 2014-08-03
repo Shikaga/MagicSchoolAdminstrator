@@ -5,10 +5,10 @@ RoomEditor = React.createClass({
 		emitr.on("editRoom", function(data) {
 			this.setState({
 				room:data.room,
-				type:data.room.type,
-				objects: data.room.op.objects,
-				object: data.room.op.object
+				type:data.room.type
 			})
+
+			this.setItemState(data.room);
 		}.bind(this))
 
 		return {
@@ -27,18 +27,30 @@ RoomEditor = React.createClass({
 		})
 	},
 
+	setItemState: function(room) {
+		if (room.op.itemTypeSelected) {
+			this.setState({
+				items: Object.keys(room.op.itemTypes),
+				item: room.op.itemTypeSelected.id
+			})
+		}
+	},
+
 	selectChanged: function(event) {
+		var roomType = RoomTypes[event.target.value]
+		this.state.room.setType(roomType);
 		this.setState({
 			type:event.target.value
 		})
-		this.state.room.setType(event.target.value);
+		this.setItemState(this.state.room);
 	},
 
 	objectChanged: function(event) {
+		debugger;
 		this.setState({
-			object:event.target.value
+			item:event.target.value
 		})
-		this.state.room.op.object = event.target.value;
+		this.state.room.op.itemTypeSelected = this.state.room.op.itemTypes[event.target.value];
 	},
 
 	render: function() {
@@ -48,9 +60,9 @@ RoomEditor = React.createClass({
 			options.push(<option value={type}>{RoomTypes[type].name}</option>)
 		}
 
-		objects = [];
-		for (var type in this.state.objects) {
-			objects.push(<option value={this.state.objects[type]}>{this.state.objects[type]}</option>)
+		var itemOptions = [];
+		for (var type in this.state.items) {
+			itemOptions.push(<option value={this.state.items[type]}>{this.state.items[type]}</option>)
 		}
 
 		var roomEditor = (<div>
@@ -59,8 +71,8 @@ RoomEditor = React.createClass({
 				{options}
 			</select>
 
-			<select onChange={this.objectChanged} value={this.state.object}>
-				{objects}
+			<select onChange={this.objectChanged} value={this.state.item}>
+				{itemOptions}
 			</select>
 
 			<button onClick={this.onDone}>Done</button>

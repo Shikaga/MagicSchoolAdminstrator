@@ -58,6 +58,7 @@ Room.prototype = {
 		emitr.trigger("newRoom", {
 			room: this
 		})
+		this.op.setRoom(this);
 		return this;
 	},
 

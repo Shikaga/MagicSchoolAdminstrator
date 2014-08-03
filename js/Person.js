@@ -25,30 +25,40 @@ Person.prototype = {
 	},
 
 	goToItem: function(item) {
+
+		console.log(item.room.x + item.container.x, item.room.y + item.container.y)
 		this.moveableEntity.setNewDestination({
 			x: item.room.x + item.container.x,
 			y: item.room.y + item.container.y
 		});
 	},
 
+	setSpeechBubble: function(text) {
+		this.speechBubble = new ItemRenderer()
+			.addRect("#FFF", 0, -50,60,20)
+			.addText("Reading", "#000", 0, -50)
+			.done()
+		this.container.addChild(this.speechBubble);
+
+	},
+
+	clearSpeechBubble: function() {
+
+	},
+
 	renderInit: function(map,moveableEntity) {
-		var container = new createjs.Container();
-		this.container = container;
-		container.x = moveableEntity.x;
-		container.y = moveableEntity.y;
-		map.addChild(container)
-
-		var circle = new createjs.Shape();
-		circle.graphics.beginFill(this.color).drawCircle(0, 0, 10);
-		container.addChild(circle);
-
-		var text = new createjs.Text(this.name, "16px Arial", "#000");
-		text.x = 15;
-		text.y = -8;
-		container.addChild(text);
-
-		circle.on("click", function(evt) {
+		this.container = new ItemRenderer()
+			.addRect(this.color,-15,-10,30,30)
+			.addCircle("#D3AF8E",0,-10,10)
+			.on("click", function(evt) {
 			emitr.trigger("studentSelected", {container: this});
-		}.bind(this))
+		}.bind(this)).done();
+
+		//this.setSpeechBubble();
+
+		this.container.x = moveableEntity.x;
+		this.container.y = moveableEntity.y;
+		map.addChild(this.container)
+
 	}
 }

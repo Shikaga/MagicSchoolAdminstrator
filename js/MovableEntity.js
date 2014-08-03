@@ -8,7 +8,7 @@ function MovableEntity(x, y, speed) {
 
 MovableEntity.prototype = {
 	update: function(dt) {
-		if (this.toX && this.toY && dt > 0) {
+		if (this.toX !== null && this.toY !== null && dt > 0) {
             var dx = this.toX - this.x;   
             var dy = this.toY - this.y;
             var distance = Math.sqrt(dx*dx+dy*dy);
