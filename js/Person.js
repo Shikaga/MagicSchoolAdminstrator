@@ -31,11 +31,10 @@ Person.prototype = {
 	},
 
 	goToItem: function(item) {
-
-		console.log(item.room.x + item.container.x, item.room.y + item.container.y)
+		var coords = item.getCoords();
 		this.moveableEntity.setNewDestination({
-			x: item.room.x + item.container.x,
-			y: item.room.y + item.container.y
+			x: coords.x,
+			y: coords.y
 		});
 	},
 

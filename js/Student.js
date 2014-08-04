@@ -43,7 +43,9 @@ LibraryStateHandler.prototype = {
 
 	ifArrived: function(item) {
 		if (item) {
-			if (item.container.x + item.room.x == this.student.person.moveableEntity.x && item.container.y + item.room.y == this.student.person.moveableEntity.y) {
+			var coords = item.getCoords();
+			if (coords.x == this.student.person.moveableEntity.x && 
+				coords.y == this.student.person.moveableEntity.y) {
 				return true;
 			}
 		}

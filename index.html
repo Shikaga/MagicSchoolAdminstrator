@@ -30,6 +30,7 @@
     	<script src="js/Timetable.js"></script>
     	<script src="js/ItemPlacer.js"></script>
     	<script src="js/ItemRenderer.js"></script>
+    	<script src="js/Item.js"></script>
 
 	</head>
 	<body onload="init()">
@@ -60,7 +61,7 @@
 			function init() {
 				stage = new createjs.Stage("demoCanvas");
 
-				var map = new createjs.Container();
+				map = new createjs.Container();
 				stage.addChild(map);
 				map.scaleX = 0.5;
 				map.scaleY = 0.5;

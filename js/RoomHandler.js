@@ -72,10 +72,14 @@ RoomHandler.prototype = {
 		}
 	},
 	getRoomTypeIn: function(coords) {
+		var room = this.getRoomIn(coords);
+		if (room) return room.type;
+	},
+	getRoomIn: function(coords) {
 		for (var i=0; i < this.rooms.length; i++) {
 			var room = this.rooms[i];
 			if (room.containsCoords(coords)) {
-				return room.type;
+				return room;
 			}
 		}
 	},
