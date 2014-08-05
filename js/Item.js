@@ -8,7 +8,8 @@ function Item(x,y,type, ip) {
 
 	this.container = this.type.createNewContainer();
 	this.syncCoords();
-	map.addChild(this.container);
+	itemContainer.addChild(this.container);
+	//map.setChildIndex(this.container,1);
 
 	this.lastXChange = 0;
 	this.lastYChange = 0;

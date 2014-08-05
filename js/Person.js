@@ -63,7 +63,8 @@ Person.prototype = {
 
 		this.container.x = moveableEntity.x;
 		this.container.y = moveableEntity.y;
-		map.addChild(this.container)
+		personContainer.addChild(this.container)
+		//map.setChildIndex(this.container,2);
 
 	}
 }

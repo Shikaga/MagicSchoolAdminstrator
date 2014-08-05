@@ -69,6 +69,12 @@
 				map.x = 350;
 				map.y = 150;
 
+				itemContainer = new createjs.Container();
+				map.addChild(itemContainer);
+
+				personContainer = new createjs.Container();
+				map.addChild(personContainer);
+
 				roomHandler = new RoomHandler(map);
 				var studentHandler = new StudentHandler(map, roomHandler);
 				var spawnCoords = roomHandler.spawnRoom.getRandomCoordinates();
