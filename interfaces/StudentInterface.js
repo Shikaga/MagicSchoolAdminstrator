@@ -2,9 +2,9 @@
 StudentInterface = React.createClass({
 	getInitialState: function() {
 
-		emitr.on("studentSelected", function(data) {
+		emitr.on("studentSelected", function(student) {
 			this.setState({
-				student:data.container
+				student:student
 			})
 		}.bind(this))
 
@@ -20,11 +20,18 @@ StudentInterface = React.createClass({
 	},
 
 	render: function() {
+
 		var studentInterface;
 		if (this.state.student) {
+			var activities = [];
+			this.state.student.activities.forEach(function(activity) {
+				activities.push(<div>{activity.description} - {activity.getPriority()}</div>)
+			})
 			studentInterface = (<div>
-				<h1>Student: {this.state.student.name}</h1>
+				<h1>Student: {this.state.student.person.name}</h1>
 				<button onClick={this.close}>Close</button>
+				<h2>Activities</h2>
+				<div>{activities}</div>
 			</div>)
 		}
 

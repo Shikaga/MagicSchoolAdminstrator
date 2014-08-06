@@ -64,9 +64,9 @@ function RoomHandler(map) {
 }
 
 RoomHandler.prototype = {
-	getRoom: function(type) {
+	getRoom: function(typeId) {
 		for (var i=0; i < this.rooms.length; i++) {
-			if (this.rooms[i].type.id == type) {
+			if (this.rooms[i].type.id == typeId) {
 				return this.rooms[i];
 			}
 		}

@@ -46,7 +46,6 @@ RoomEditor = React.createClass({
 	},
 
 	objectChanged: function(event) {
-		debugger;
 		this.setState({
 			item:event.target.value
 		})

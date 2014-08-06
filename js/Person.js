@@ -1,4 +1,5 @@
-function Person(map,x,y,speed, color, type) {
+function Person(map,x,y,speed, color, type, owner) {
+	this.owner = owner;
 	this.moveableEntity = new MovableEntity(x,y,speed);
 
 	this.type = type;
@@ -55,8 +56,8 @@ Person.prototype = {
 		this.container = new ItemRenderer()
 			.addRect(this.color,-15,-10,30,30)
 			.addCircle("#D3AF8E",0,-10,10)
-			.on("click", function(evt) {
-			emitr.trigger("studentSelected", {container: this});
+			.on("mousedown", function(evt) {
+			emitr.trigger("studentSelected", this.owner);
 		}.bind(this)).done();
 
 		//this.setSpeechBubble();

@@ -10,7 +10,7 @@ Clock.prototype = {
 		var gameTime = dtMillisconds * 60 * 2; //2 game minutes for every real second (12 minute days)
 		if (!this.paused) {
 			this.updateClock(gameTime);
-			emitr.trigger("timePasses", gameTime/1000)
+			emitr.trigger("minutesPass", gameTime/60000)
 		}
 	},
 	updateClock: function(gameTime) {

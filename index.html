@@ -1,7 +1,14 @@
 <html>
 	<head>
 		<title>Magical School Administrator</title>
-		<style></style>
+		<style>
+			.menu {
+				position: absolute;
+				background-color: white;
+				border: solid;
+				right: 0px;
+			}
+		</style>
 		<script src="lib/createjs-2013.12.12.min.js"></script>
     	<script src="lib	/keymaster.js"></script>
     	<script src="lib/emitr.js"></script>
@@ -32,6 +39,9 @@
     	<script src="js/ItemRenderer.js"></script>
     	<script src="js/Item.js"></script>
 
+    	<script src="js/LibraryStateHandler.js"></script>
+    	<script src="js/RelaxActivity.js"></script>
+
 	</head>
 	<body onload="init()">
 		<div>
@@ -40,11 +50,13 @@
 			<button onclick="emitr.trigger('showItemsMenu')">Edit Objects</button>
 			<span id="clockInterface"></span>
 		</div>
-		<div style="float:right" id="roomEditor"></div>
-		<div style="float:right" id="studentInteface"></div>
-		<div style="float:right" id="timetableInterface"></div>
-		<div style="float:left" id="clockInterface"></div>
-		<div style="float:left" id="itemsInterface"></div>
+		<div class="menu" >
+			<div id="roomEditor"></div>
+			<div id="studentInteface"></div>
+			<div id="timetableInterface"></div>
+			<div id="clockInterface"></div>
+			<div id="itemsInterface"></div>
+		</div>
 		<script type="text/jsx">
 			/** @jsx React.DOM */
 			React.renderComponent(<RoomEditor/>,document.getElementById('roomEditor'));
