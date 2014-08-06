@@ -13,7 +13,14 @@ ClockInterface = React.createClass({
 		}
 	},
 
+	addHour: function() {
+		emitr.trigger('addHour');
+	},
+
 	render: function() {
-			return <div>{this.state.time}</div>
+			return <div>
+				<div>{this.state.time}</div>
+				<button onClick={this.addHour}>Add Hour</button>
+			</div>
 	}
 })

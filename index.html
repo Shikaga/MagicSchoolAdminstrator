@@ -41,6 +41,7 @@
 
     	<script src="js/LibraryStateHandler.js"></script>
     	<script src="js/RelaxActivity.js"></script>
+    	<script src="js/SleepActivity.js"></script>
 
 	</head>
 	<body onload="init()">
@@ -71,6 +72,9 @@
 
 			var stage;
 			function init() {
+
+				clock = new Clock();
+				
 				stage = new createjs.Stage("demoCanvas");
 
 				map = new createjs.Container();
@@ -91,7 +95,6 @@
 				var studentHandler = new StudentHandler(map, roomHandler);
 				var spawnCoords = roomHandler.spawnRoom.getRandomCoordinates();
 				var teacher = new Teacher(map, spawnCoords.x, spawnCoords.y);
-				clock = new Clock();
 
 				createjs.Ticker.addEventListener("tick", update);
 

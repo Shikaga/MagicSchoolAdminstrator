@@ -3,6 +3,9 @@ function Clock() {
 	this.millisecondsPassed = 8 * 60 * 60 * 1000 //TODO: Will this overflow?
 	this.clock = null
 	this.setClock();
+	emitr.on('addHour', function() {
+		this.millisecondsPassed += 60 * 60 * 1000;
+	}.bind(this))
 }
 
 Clock.prototype = {
@@ -24,6 +27,13 @@ Clock.prototype = {
 			emitr.trigger("newClock", newClock);
 		}
 		this.clock = newClock;
+	},
+	getTime: function() {
+		var date = new Date(this.millisecondsPassed);
+		return {
+			hours: date.getHours(),
+			minutes: date.getMinutes()
+		}
 	},
 	pauseClock: function() {
 		this.paused = true;

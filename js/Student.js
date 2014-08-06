@@ -8,6 +8,7 @@ function Student(map,x,y) {
 
 	this.activities = [
 		new LibraryStateHandler(this),
+		new SleepActivity(this),
  		this.currentActivity
 	];
 	this.sortActivities();
@@ -32,9 +33,6 @@ Student.prototype = {
 			}
 		}
 		this.activities[0].update(dt);
-		//if (this.inLibrary()) {
-		//	this.libraryState.update(dt);
-		//}
 	},
 
 	sortActivities: function() {
@@ -43,79 +41,10 @@ Student.prototype = {
 		})
 	},
 
-	activityComplete: function() {
-		//this.currentActivity = null;
-		//this.useFreeTime();
-	},
 
 	setGroup: function(group) {
 		this.group = group;
 	},
-
-	goToBed: function() {
-		if (this.bed == null) {
-			this.findBed();
-		} 
-		if (this.bed !== null) {
-			this.person.goToItem(this.bed);
-		} else {
-			//console.log("There is no bed to go to!");
-		}
-	},
-
-	inLibrary: function() {
-		return (this.person.getRoomTypeIn().id == "library") 
-	},
-
-	doLibraryWork: function() {
-		//Do nothing!
-	},
-
-	goToLibrary: function() {
-		//if (this.inLibrary()) {
-		//	console.log("???")
-			this.currentActivity = this.libraryState;
-		//	this.doLibraryWork();
-		//} else {
-		//	this.person.goToRoom(roomHandler.getRoom("library"));
-		//}
-	},
-
-	findBed: function() {
-		var bed = roomHandler.getFreeBed();
-		if (bed == null) {
-			//console.log("I can't find a bed!")
-		} else {
-			this.bed = bed;
-			this.bed.owner = this;
-		}
-	},
-
-/*	useFreeTime: function() {
-		if (this.tiredness > 1000) {
-			this.goToBed();
-		} else {
-			if (this.drive > 20) {
-				this.study();
-			} else {
-				this.relax();
-			}
-		}
-		
-	},
-
-	relax: function() {
-		this.currentActivity = new RelaxActivity(this);
-	},
-
-	study: function() {
-		if (roomHandler.getRoom("library")) {// There is a nearby library
-			this.goToLibrary();
-		} else {
-			console.log("I can't study!");
-			this.relax();
-		}
-	},*/
 
 	setListeners: function() {
 		emitr.on("newRoom", function(data) {
