@@ -1,5 +1,5 @@
 function ClassActivity(student) {
-	this.description = "Sleep";
+	this.description = "Class";
 	this.student = student;
 	this.state = "IDLE";
 } 
