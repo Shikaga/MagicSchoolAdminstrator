@@ -8,15 +8,12 @@ function Student(map,x,y) {
 
 	this.activities = [
 		new LibraryStateHandler(this),
+		new ClassActivity(this),
 		new SleepActivity(this),
  		this.currentActivity
 	];
-	this.sortActivities();
-
 
 	this.drive = 10;
-
-	this.libraryState = new LibraryStateHandler(this);
 
 	this.setListeners();
 }
@@ -41,7 +38,6 @@ Student.prototype = {
 		})
 	},
 
-
 	setGroup: function(group) {
 		this.group = group;
 	},
@@ -51,24 +47,6 @@ Student.prototype = {
 			//Do I now have a room that I need?
 		}.bind(this))
 
-		/*emitr.on("newClock", function(clock) {
-			var hour = Number.parseFloat(clock.split(":")[0]);
-			var activity = this.group.getCurrentActivity(hour);
-			//if (activity !== this.currentActivity) {
-				//New Activity!
-			//	this.currentActivity = activity;
-			if (activity == "freetime") {
-				this.useFreeTime();
-			} else if (activity == "class") {
-				console.log("CLASS!")
-				var room = this.group.getRoomToBeIn(hour);
-				if (room != null) {
-					this.person.goToRoom(room);
-				}	
-			}
-			//}
-			//
-		}.bind(this));*/
 
 		emitr.on("minutesPass", function(dt) {
 			this.update(dt);
