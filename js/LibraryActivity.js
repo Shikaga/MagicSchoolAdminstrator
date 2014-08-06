@@ -1,4 +1,4 @@
-function LibraryStateHandler(student) {
+function LibraryActivity(student) {
 	this.description = "Study in Library";
 	this.student = student;
 	this.state = "IDLE";
@@ -6,7 +6,7 @@ function LibraryStateHandler(student) {
 	this.inertia = 0;
 }
 
-LibraryStateHandler.prototype = {
+LibraryActivity.prototype = {
 	update: function(dt) {
 		this.reduceInertia(dt);
 		switch(this.state) {

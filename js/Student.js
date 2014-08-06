@@ -7,7 +7,7 @@ function Student(map,x,y) {
 	this.bed = null;
 
 	this.activities = [
-		new LibraryStateHandler(this),
+		new LibraryActivity(this),
 		new ClassActivity(this),
 		new SleepActivity(this),
  		this.currentActivity
