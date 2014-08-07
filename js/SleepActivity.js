@@ -42,7 +42,6 @@ SleepActivity.prototype = {
 	},
 
 	goToBed: function() {
-		debugger;
 		if (this.student.bed == null) {
 			this.findBed();
 		} 

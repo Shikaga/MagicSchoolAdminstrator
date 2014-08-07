@@ -2,6 +2,8 @@ function ClassActivity(student) {
 	this.description = "Class";
 	this.student = student;
 	this.state = "IDLE";
+
+	this.classroom = null;
 } 
 
 ClassActivity.prototype = {
@@ -10,6 +12,12 @@ ClassActivity.prototype = {
 			case "IDLE": 
 				this.tryGoToClass();
 				console.log("IDLE!");
+				break;
+			case "GOING TO CLASSROOM":
+				this.goToClassRoom();
+				break;
+			case "GOING TO DESK":
+				this.goToDesk();
 				break;
 			case "CLASS":
 				console.log("CLASS!");
@@ -33,8 +41,16 @@ ClassActivity.prototype = {
 		return this.state == "IDLE";
 	},
 
-	tryGoToClass: function() {
-		var room = this.student.group.getRoomToBeIn(clock.getTime().hours);
+	goToClassRoom: function() {
+		if (this.student.person.isInRoom(this.classroom)) {
+			this.goToDesk();
+		} else {
+			this.student.person.goToRoom(this.classroom);
+		}	
+	},
+
+	goToDesk: function() {
+		this.state = "GOING TO DESK";
 		if (this.student.occupiedItem) {
 			//Do nothing
 		} else {
@@ -46,6 +62,23 @@ ClassActivity.prototype = {
 			} else {
 				console.log("Cannot go to desk")
 			}
+		}
+	},
+
+	tryGoToClass: function() {
+		if (this.classroom == null) {
+			this.classroom = this.student.group.getRoomToBeIn(clock.getTime().hours);
+		}
+
+		if (this.classroom) {
+			if (this.student.person.isInRoom(this.classroom)) {
+				this.goToDesk();
+			} else {
+				this.state = "GOING TO CLASSROOM";
+				this.goToClassRoom();
+			}
+		} else {
+			console.log("I don't have a classroom to go to");
 		}
 	}
 }

@@ -25,7 +25,7 @@ StudentInterface = React.createClass({
 		if (this.state.student) {
 			var activities = [];
 			this.state.student.activities.forEach(function(activity) {
-				activities.push(<div>{activity.description} - {activity.getPriority()}</div>)
+				activities.push(<div>{activity.description} : {activity.getPriority()} : {activity.state}</div>)
 			})
 			studentInterface = (<div>
 				<h1>Student: {this.state.student.person.name}</h1>

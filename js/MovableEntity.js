@@ -29,5 +29,12 @@ MovableEntity.prototype = {
 	setNewDestination: function(coords) {
 		this.toX = coords.x;
 		this.toY = coords.y;
-	}
+	},
+
+    getCoords: function() {
+        return {
+            x: this.x,
+            y: this.y
+        }
+    }
 }

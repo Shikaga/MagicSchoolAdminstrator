@@ -20,6 +20,10 @@ Person.prototype = {
 		this.container.y = this.moveableEntity.y;
 	},
 
+	isInRoom: function(room) {
+		return room.containsCoords(this.moveableEntity.getCoords())
+	},
+
 	getRoomTypeIn: function() {
 		return roomHandler.getRoomTypeIn({x: this.moveableEntity.x, y: this.moveableEntity.y})
 	},
