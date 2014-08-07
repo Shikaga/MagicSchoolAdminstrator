@@ -6,7 +6,7 @@ function RelaxActivity(student) {
 	this.maxStandTime = 5;
 	this.timeStanding = 0;
 	this.intertia = 0;
-} 
+}
 
 RelaxActivity.prototype.update = function(dt) {
 	switch (this.state) {
@@ -40,3 +40,5 @@ RelaxActivity.prototype.tryCancel = function() {
 RelaxActivity.prototype.isComplete = function() {
 	return this.state == "IDLE";
 }
+
+RelaxActivity.implements(Activity);

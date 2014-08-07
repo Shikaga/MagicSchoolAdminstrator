@@ -15,6 +15,7 @@
     	<script src="lib/JSXTransformer.js"></script>
     	<script src="lib/react.js"></script>
     	<script src="lib/chance.js"></script>
+    	<script src="lib/topiarist.js"></script>
 
     	<script type="text/jsx" src="interfaces/RoomInterface.js"></script>
     	<script type="text/jsx" src="interfaces/StudentInterface.js"></script>
@@ -39,6 +40,7 @@
     	<script src="js/ItemRenderer.js"></script>
     	<script src="js/Item.js"></script>
 
+    	<script src="js/Activity.js"></script>
     	<script src="js/LibraryActivity.js"></script>
     	<script src="js/RelaxActivity.js"></script>
     	<script src="js/SleepActivity.js"></script>
@@ -73,6 +75,7 @@
 
 			var stage;
 			function init() {
+				topiarist.install();
 
 				clock = new Clock();
 
