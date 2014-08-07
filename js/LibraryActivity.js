@@ -72,8 +72,13 @@ LibraryActivity.prototype = {
 	goToChair: function() {
 		var chair = roomHandler.getChair();
 		if (chair) {
+			chair.owner = this.student;
+			this.occupiedChair = chair;
+			this.student.occupiedItem = chair;
 			this.student.person.goToItem(chair);
 			this.state = "GOING TO CHAIR";
+		} else {
+
 		}
 	},
 
@@ -86,6 +91,10 @@ LibraryActivity.prototype = {
 	},
 
 	tryCancel: function() {
+		if (this.occupiedChair) {
+			this.student.dropItem(this.occupiedChair);
+			this.occupiedChair.owner = null;
+		}
 		this.state = "IDLE";
 	},
 

@@ -27,10 +27,25 @@ function RoomHandler(map) {
 	createAndAddRoom(300,-100,"classroom");
 
 	createAndAddRoom(-100,-100, "library");
-	this.rooms[4].op.setRoom(this.rooms[5]);
-	this.rooms[4].op.itemTypeSelected = LibraryItems.chair;
-	this.rooms[4].op.newItem(100,100);
-	this.rooms[4].op.clearRoom();
+	this.rooms[5].op.setRoom(this.rooms[5]);
+
+	this.rooms[5].op.itemTypeSelected = LibraryItems.bookshelf;
+	this.rooms[5].op.newItem(0,100);
+	this.rooms[5].op.itemPlaced();
+
+	this.rooms[5].op.itemTypeSelected = LibraryItems.chair;
+	this.rooms[5].op.newItem(100,100);
+	this.rooms[5].op.itemPlaced();
+
+	this.rooms[5].op.itemTypeSelected = LibraryItems.chair;
+	this.rooms[5].op.newItem(150,100);
+	this.rooms[5].op.itemPlaced();
+
+	this.rooms[5].op.itemTypeSelected = LibraryItems.chair;
+	this.rooms[5].op.newItem(100,150);
+	this.rooms[5].op.itemPlaced();
+
+	this.rooms[5].op.clearRoom();
 
 
 	//createAndAddRoom(100,-300,"entrancehall", false);
