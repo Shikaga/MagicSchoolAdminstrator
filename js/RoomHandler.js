@@ -84,33 +84,31 @@ RoomHandler.prototype = {
 		}
 	},
 	getFreeBed: function() {
-		for (var i=0; i < this.rooms.length; i++) {
-			var room = this.rooms[i];
-			for (var j=0; j < room.items.length; j++) {
-				var item = room.items[j];
-				if (item.type.name == "Bed" && item.owner == null) {
-					return item;
-				}
-			}
-		}
+		return this.getFreeItem('bed');
 	},
 	getBookshelf: function() {
+		return this.getItem('bookshelf');
+	},
+	getChair: function() {
+		return this.getFreeItem('chair');
+	},
+	getItem: function(itemId) {
 		for (var i=0; i < this.rooms.length; i++) {
 			var room = this.rooms[i];
 			for (var j=0; j < room.items.length; j++) {
 				var item = room.items[j];
-				if (item.type.id == "bookshelf") {
+				if (item.type.id == itemId) {
 					return item;
 				}
 			}
 		}
 	},
-	getChair: function() {
+	getFreeItem: function(itemId) {
 		for (var i=0; i < this.rooms.length; i++) {
 			var room = this.rooms[i];
 			for (var j=0; j < room.items.length; j++) {
 				var item = room.items[j];
-				if (item.type.id == "chair") {
+				if (item.type.id == itemId && item.owner == null) {
 					return item;
 				}
 			}

@@ -93,3 +93,7 @@ LibraryActivity.prototype = {
 		return this.state == "IDLE";
 	}
 }
+
+
+
+LibraryActivity.implements(Activity);

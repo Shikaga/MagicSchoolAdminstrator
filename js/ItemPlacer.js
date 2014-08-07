@@ -3,8 +3,9 @@ function ItemPlacer(room) {
 }
 
 ItemPlacer.prototype.setRoom = function(room) {
-	this.room = room;
+	console.log("!!!");
 	this.clearListeners();
+	this.room = room;
 
 	this.gridSize = 20;
 
@@ -35,9 +36,11 @@ ItemPlacer.prototype.clearRoom = function() {
 }
 
 ItemPlacer.prototype.clearListeners = function() {
-	this.room.container.off("mousedown", this.mousedown);
-	this.room.container.off("pressmove", this.pressmove);
-	this.room.container.off("pressup", this.pressup);
+	if (this.room) {
+		this.room.container.off("mousedown", this.mousedown);
+		this.room.container.off("pressmove", this.pressmove);
+		this.room.container.off("pressup", this.pressup);
+	}
 }
 
 ItemPlacer.prototype.getGridPosition = function(room, x,y) {

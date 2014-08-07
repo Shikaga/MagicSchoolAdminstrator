@@ -24,7 +24,6 @@ SleepActivity.prototype = {
 	},
 
 	getPriority: function() {
-		debugger;
 		var time = clock.getTime();
 		if (time.hours > 21 || time.hours < 5) {
 			return 100;
@@ -43,6 +42,7 @@ SleepActivity.prototype = {
 	},
 
 	goToBed: function() {
+		debugger;
 		if (this.student.bed == null) {
 			this.findBed();
 		} 
@@ -63,3 +63,5 @@ SleepActivity.prototype = {
 		}
 	}
 }
+
+SleepActivity.implements(Activity);

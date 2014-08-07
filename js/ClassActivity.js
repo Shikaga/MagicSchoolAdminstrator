@@ -18,7 +18,6 @@ ClassActivity.prototype = {
 	},
 
 	getPriority: function() {
-		debugger;
 		if (this.student.group.getRoomToBeIn(clock.getTime().hours)) {
 			return 200;
 		} else {
@@ -36,8 +35,20 @@ ClassActivity.prototype = {
 
 	tryGoToClass: function() {
 		var room = this.student.group.getRoomToBeIn(clock.getTime().hours);
-		if (room != null) {
-			this.student.person.goToRoom(room);
-		}	
+		if (this.student.occupiedItem) {
+			//Do nothing
+		} else {
+			var desk = roomHandler.getFreeItem('desk');
+			if (desk && desk.owner == null) {
+				this.student.person.goToItem(desk)
+				desk.owner = this.student;
+				this.student.occupiedItem = desk;
+			} else {
+				console.log("Cannot go to desk")
+			}
+		}
 	}
 }
+
+
+ClassActivity.implements(Activity);

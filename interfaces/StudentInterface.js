@@ -31,6 +31,7 @@ StudentInterface = React.createClass({
 				<h1>Student: {this.state.student.person.name}</h1>
 				<button onClick={this.close}>Close</button>
 				<h2>Activities</h2>
+				<div>Current: {this.state.student.currentActivity.description}</div>
 				<div>{activities}</div>
 			</div>)
 		}

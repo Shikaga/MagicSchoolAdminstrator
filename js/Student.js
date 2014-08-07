@@ -5,6 +5,7 @@ function Student(map,x,y) {
 	this.group = null;
 	this.currentActivity = new RelaxActivity(this);
 	this.bed = null;
+	this.occupiedItem = null;
 
 	this.activities = [
 		new LibraryActivity(this),
