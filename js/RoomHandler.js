@@ -3,9 +3,9 @@ function RoomHandler(map) {
 
 	var op = new ItemPlacer();
 
-	var createRoom = function(x,y,typeString,editable) {
+	var createRoom = function(x,y,width,height,typeString,editable) {
 		if (typeString == null) typeString = "empty";
-		var room = new Room(map,op,x,y,200,200).setType(RoomTypes[typeString])
+		var room = new Room(map,op,x,y,width,height).setType(RoomTypes[typeString])
 		if (editable == false) {
 			room.editable = false;
 		}
@@ -13,42 +13,42 @@ function RoomHandler(map) {
 	}.bind(this)
 
 	var createAndAddRoom = function(x,y,typeString,editable) {
-		var room = createRoom(x,y,typeString,editable);
+		var room = createRoom(x,y,200,200,typeString,editable);
 		this.rooms.push(room);
 		return room;
 	}.bind(this)
 
-	var entranceHall = createAndAddRoom(100,100,"entrancehall", false);
+	var entranceHall = createRoom(100,-100,200,400, "entrancehall");
+	this.rooms.push(entranceHall);
+	this.rooms.push(createRoom(-300,-300,1000,200, "entrancehall"));
+
 	createAndAddRoom(300,100,"classroom");
 	createAndAddRoom(-100,100,"dorm");
 	createAndAddRoom(300,-100,"classroom");
 
 	createAndAddRoom(-100,-100, "library");
-	this.rooms[4].op.setRoom(this.rooms[4]);
+	this.rooms[4].op.setRoom(this.rooms[5]);
 	this.rooms[4].op.itemTypeSelected = LibraryItems.chair;
 	this.rooms[4].op.newItem(100,100);
 	this.rooms[4].op.clearRoom();
 
-	createAndAddRoom(100,-100,"entrancehall", false);
-	createAndAddRoom(100,-300,"entrancehall", false);
-	createAndAddRoom(-100,-300,"entrancehall", false);
-	createAndAddRoom(-300,-300,"entrancehall", false);
-	createAndAddRoom(300,-300,"entrancehall", false);
-	createAndAddRoom(500,-300,"entrancehall", false);
+
+	//createAndAddRoom(100,-300,"entrancehall", false);
+	//createAndAddRoom(-100,-300,"entrancehall", false);
+	//createAndAddRoom(-300,-300,"entrancehall", false);
+	//createAndAddRoom(300,-300,"entrancehall", false);
+	//createAndAddRoom(500,-300,"entrancehall", false);
 
 	createAndAddRoom(100,-500);
 
 	createAndAddRoom(-300,-100);
-	createAndAddRoom(-500,-100);
-	createAndAddRoom(-500,-300);
-	createAndAddRoom(-500,-500);
+	this.rooms.push(createRoom(-500,-500,200,600));
 	createAndAddRoom(-300,-500);
 	createAndAddRoom(-100,-500);
 
 	createAndAddRoom(500,-100);
-	createAndAddRoom(700,-100);
-	createAndAddRoom(700,-300);
-	createAndAddRoom(700,-500);
+
+	this.rooms.push(createRoom(700,-500,200,600));
 	createAndAddRoom(500,-500);
 	createAndAddRoom(300,-500);
 
