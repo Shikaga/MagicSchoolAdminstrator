@@ -82,7 +82,7 @@ ItemPlacer.prototype.newItem = function(x,y) {
 		if (legalCoords) {
 			this.item = new Item(legalCoords.x + this.room.x, 
 				legalCoords.y + this.room.y, 
-				this.itemTypeSelected, this);
+				this.itemTypeSelected, this, this.room);
 			this.room.addItem(this.item);
 		}
 	}

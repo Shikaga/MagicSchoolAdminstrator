@@ -117,5 +117,12 @@ Room.prototype = {
 		this.editButton.on("click", function(event) {
 			emitr.trigger("selectRoom", {room:this});
 		}.bind(this))
-		}
+	},
+
+	dropItem: function(dropItem) {
+		this.items = this.items.filter(function(item) {return item !== dropItem})
+	}
 }
+
+
+Room.implements(ItemHolder);

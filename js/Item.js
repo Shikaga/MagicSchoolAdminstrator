@@ -1,8 +1,9 @@
 //function Item(itemPlacer,type,container,room) {
-function Item(x,y,type, ip) {
+function Item(x,y,type,ip, location) {
 	this.ip = ip;
 	this.type = type;
 	this.owner = null;
+	this.location = location; // A room or person 
 
 	this.moveableEntity = new MovableEntity(x,y)
 
@@ -19,17 +20,27 @@ function Item(x,y,type, ip) {
 
 Item.prototype.setListeners = function() {
 	this.container.on("mousedown", function(event) {
-		console.log("DOWN");
+		if (event.nativeEvent.button == 2) {
+			this.destroy();
+		}
 	}.bind(this))
 
 	this.container.on("pressmove", function(event) {
 		this.ip.moveItem(this, event);
-		console.log("MOVE")
 	}.bind(this))
 
 	this.container.on("pressup", function(event) {
-		console.log("UP")
 	}.bind(this))
+}
+
+Item.prototype.destroy = function() {
+	if (this.location) {
+		this.location.dropItem(this);
+	}
+	if (this.owner) {
+		this.owner.dropItem(this);
+	}
+	itemContainer.removeChild(this.container);
 }
 
 Item.prototype.getCoords = function() {

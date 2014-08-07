@@ -52,5 +52,16 @@ Student.prototype = {
 		emitr.on("minutesPass", function(dt) {
 			this.update(dt);
 		}.bind(this))
+	},
+
+	dropItem: function(item) {
+		if (this.bed == item) {
+			this.bed = null;
+		}
+		if (this.occupiedItem == item) {
+			this.bed = null;
+		}
 	}
 }
+
+Student.implements(ItemHolder);

@@ -27,6 +27,9 @@
     	<script src="js/MovableEntity.js"></script>
     	<script src="js/DormItems.js"></script>
 
+
+    	<script src="js/ItemHolder.js"></script>
+
     	<script src="js/Room.js"></script>
     	<script src="js/RoomTypes.js"></script>
     	<script src="js/RoomHandler.js"></script>
@@ -75,11 +78,13 @@
 
 			var stage;
 			function init() {
-				topiarist.install();
 
 				clock = new Clock();
 
 				stage = new createjs.Stage("demoCanvas");
+				document.getElementById('demoCanvas').oncontextmenu = function (e) {
+				    e.preventDefault();
+				};
 
 				map = new createjs.Container();
 				stage.addChild(map);
