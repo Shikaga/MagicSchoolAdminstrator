@@ -38,7 +38,7 @@ LibraryItems = {
 		id: "bookshelf",
 		owner: null,
 		createNewContainer: function() {
-			return new ItemRenderer(this.name).addRect('brown',-15,-30,30,60).done()
+			return new ItemRenderer(this.name).addRect('brown',-15,-60,30,120).done()
 		}
 	},
 	"chair": {
@@ -46,7 +46,7 @@ LibraryItems = {
 		id: "chair",
 		owner: null,
 		createNewContainer: function() {
-			return new ItemRenderer(this.name).addRect('red',-15,-30,30,30).done()
+			return new ItemRenderer(this.name).addRect('red',-20,-20,40,40).addRect('darkred',-15,-20,30,30).done()
 		}
 	}
 }

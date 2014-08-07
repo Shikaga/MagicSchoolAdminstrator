@@ -28,7 +28,8 @@ RelaxActivity.prototype.tryRelax = function(dt) {
 }
 
 RelaxActivity.prototype.getPriority = function() {
-	return 20 + this.intertia;
+	//return 20 + this.intertia;
+	return 0;
 }
 
 RelaxActivity.prototype.tryCancel = function() {

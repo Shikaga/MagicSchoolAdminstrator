@@ -23,7 +23,11 @@ function RoomHandler(map) {
 	createAndAddRoom(-100,100,"dorm");
 	createAndAddRoom(300,-100,"classroom");
 
-	createAndAddRoom(-100,-100);
+	createAndAddRoom(-100,-100, "library");
+	this.rooms[4].op.setRoom(this.rooms[4]);
+	this.rooms[4].op.itemTypeSelected = LibraryItems.chair;
+	this.rooms[4].op.newItem(100,100);
+	this.rooms[4].op.clearRoom();
 
 	createAndAddRoom(100,-100,"entrancehall", false);
 	createAndAddRoom(100,-300,"entrancehall", false);
