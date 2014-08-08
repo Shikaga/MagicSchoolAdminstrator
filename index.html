@@ -44,6 +44,8 @@
     	<script src="js/ItemPlacer.js"></script>
     	<script src="js/ItemRenderer.js"></script>
     	<script src="js/Item.js"></script>
+    	<script src="js/StudentGroup.js"></script>
+    	<script src="js/LessonOrganiser.js"></script>
 
     	<!-- Activities -->
     	<script src="js/LibraryActivity.js"></script>
@@ -105,9 +107,10 @@
 				map.addChild(personContainer);
 
 				roomHandler = new RoomHandler(map);
+				lessonOrganiser = new LessonOrganiser();
 				var studentHandler = new StudentHandler(map, roomHandler);
 				var spawnCoords = roomHandler.spawnRoom.getRandomCoordinates();
-				var teacher = new Teacher(map, spawnCoords.x, spawnCoords.y);
+				teacher = new Teacher(map, spawnCoords.x, spawnCoords.y);
 
 				createjs.Ticker.addEventListener("tick", update);
 
@@ -130,6 +133,7 @@
 					stage.y -= 300 * dt;
 				}
 				clock.update(event.delta);
+				lessonOrganiser.update();
 				stage.update();
 			}
 		</script>

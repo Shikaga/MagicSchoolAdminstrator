@@ -4,6 +4,9 @@ function ClassActivity(student) {
 	this.state = "IDLE";
 
 	this.classroom = null;
+	this.teacher = null;
+	this.classTime = false;
+	lessonOrganiser.registerClassActivity(this);
 } 
 
 ClassActivity.prototype = {
@@ -26,7 +29,7 @@ ClassActivity.prototype = {
 	},
 
 	getPriority: function() {
-		if (this.student.group.getRoomToBeIn(clock.getTime().hours)) {
+		if (this.classTime) {
 			return 200;
 		} else {
 			return -1;
@@ -68,10 +71,6 @@ ClassActivity.prototype = {
 	},
 
 	tryGoToClass: function() {
-		if (this.classroom == null) {
-			this.classroom = this.student.group.getRoomToBeIn(clock.getTime().hours);
-		}
-
 		if (this.classroom) {
 			if (this.student.person.isInRoom(this.classroom)) {
 				this.goToDesk();

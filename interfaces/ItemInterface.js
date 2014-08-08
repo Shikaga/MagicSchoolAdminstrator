@@ -23,13 +23,11 @@ ItemInterface = React.createClass({
 	render: function() {
 		var studentInterface;
 		var owner = "NONE";
-		debugger;
 		if (this.state.item) {	
 			if (this.state.item.owner) {
 				owner = this.state.item.owner.getName();
 			}
 		}
-		debugger;
 		if (this.state.visible) {
 			studentInterface = (<div>
 				<h1>Item</h1>

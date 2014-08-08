@@ -1,5 +1,5 @@
 function Teacher(map,x,y) {
-	this.person = new Person(map,x,y,1, "blue", "Professor")
+	this.person = new Person(map,x,y,60, "blue", "Professor")
 
 	this.setListeners();
 }
@@ -18,7 +18,7 @@ Teacher.prototype = {
 			
 		}.bind(this));
 
-		emitr.on("timePasses", function(dt) {
+		emitr.on("minutesPass", function(dt) {
 			this.update(dt);
 		}.bind(this))
 	},
@@ -33,6 +33,7 @@ Teacher.prototype = {
 
 	goToRoom: function(room) {
 		debugger;
+		this.person.goToRoom(room);
 	},
 
 	isInRoom: function(room) {
