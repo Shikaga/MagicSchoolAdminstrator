@@ -4,6 +4,7 @@ function MovableEntity(x, y, speed) {
 	this.toX = null;
 	this.toY = null;
 	this.speed = speed;
+    this.movementSpeed = this.speed;
 }
 
 MovableEntity.prototype = {
@@ -12,7 +13,7 @@ MovableEntity.prototype = {
             var dx = this.toX - this.x;   
             var dy = this.toY - this.y;
             var distance = Math.sqrt(dx*dx+dy*dy);
-            var distanceTravelled = this.speed * dt;
+            var distanceTravelled = this.movementSpeed * dt;
 
             if (distance < distanceTravelled) {
                 this.x = this.toX;
@@ -26,10 +27,28 @@ MovableEntity.prototype = {
         }
 	},
 
+    isGoingToRoom: function(room) {
+        return room.containsCoords({
+            x: this.toX,
+            y: this.toY
+        })
+    },
+
 	setNewDestination: function(coords) {
+        this.movementSpeed = this.speed;
 		this.toX = coords.x;
 		this.toY = coords.y;
 	},
+
+    wanderToNewDestination: function(coords) {
+        this.movementSpeed = this.speed / 3;
+        this.toX = coords.x;
+        this.toY = coords.y;
+    },
+
+    isTravelling: function() {
+        return !(this.toX == null)
+    },
 
     getCoords: function() {
         return {

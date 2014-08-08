@@ -34,6 +34,10 @@ ClassActivity.prototype = {
 	},
 
 	tryCancel: function() {
+		if (this.student.occupiedItem) {
+			this.student.occupiedItem.owner = null;
+			this.student.occupiedItem = null;
+		}
 		this.state = "IDLE";
 	},
 
@@ -42,10 +46,10 @@ ClassActivity.prototype = {
 	},
 
 	goToClassRoom: function() {
-		if (this.student.person.isInRoom(this.classroom)) {
+		if (this.student.isInRoom(this.classroom)) {
 			this.goToDesk();
 		} else {
-			this.student.person.goToRoom(this.classroom);
+			this.student.goToRoom(this.classroom);
 		}	
 	},
 
@@ -56,9 +60,7 @@ ClassActivity.prototype = {
 		} else {
 			var desk = roomHandler.getFreeItem('desk');
 			if (desk && desk.owner == null) {
-				this.student.person.goToItem(desk)
-				desk.owner = this.student;
-				this.student.occupiedItem = desk;
+				this.student.occupyItem(desk);
 			} else {
 				console.log("Cannot go to desk")
 			}

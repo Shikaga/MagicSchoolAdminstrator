@@ -22,14 +22,16 @@
     	<script type="text/jsx" src="interfaces/TimetableInterface.js"></script>
     	<script type="text/jsx" src="interfaces/ClockInterface.js"></script>
     	<script type="text/jsx" src="interfaces/ItemsInterface.js"></script>
+    	<script type="text/jsx" src="interfaces/ItemInterface.js"></script>
+
+    	<!-- Interfaces -->
+    	<script src="js/ItemHolder.js"></script>
+    	<script src="js/PersonHood.js"></script>
+    	<script src="js/Activity.js"></script>
 
 
     	<script src="js/MovableEntity.js"></script>
     	<script src="js/Items.js"></script>
-
-
-    	<script src="js/ItemHolder.js"></script>
-
     	<script src="js/Room.js"></script>
     	<script src="js/RoomTypes.js"></script>
     	<script src="js/RoomHandler.js"></script>
@@ -43,7 +45,7 @@
     	<script src="js/ItemRenderer.js"></script>
     	<script src="js/Item.js"></script>
 
-    	<script src="js/Activity.js"></script>
+    	<!-- Activities -->
     	<script src="js/LibraryActivity.js"></script>
     	<script src="js/RelaxActivity.js"></script>
     	<script src="js/SleepActivity.js"></script>
@@ -63,6 +65,7 @@
 			<div id="timetableInterface"></div>
 			<div id="clockInterface"></div>
 			<div id="itemsInterface"></div>
+			<div id="itemInterface"></div>
 		</div>
 		<script type="text/jsx">
 			/** @jsx React.DOM */
@@ -71,6 +74,7 @@
 			React.renderComponent(<TimetableInterface/>,document.getElementById('timetableInterface'));
 			React.renderComponent(<ClockInterface/>,document.getElementById('clockInterface'));
 			React.renderComponent(<ItemsInterface/>,document.getElementById('itemsInterface'));
+			React.renderComponent(<ItemInterface/>,document.getElementById('itemInterface'));
 		</script>
 		<canvas width="1000" height="300" id="demoCanvas">Could not load Canvas. Try another browser?</canvas>
 		<script>

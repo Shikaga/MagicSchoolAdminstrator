@@ -24,7 +24,10 @@ LibraryActivity.prototype = {
 					this.timeReading = 0;
 					this.state = "READING"
 				}
-				break
+				break;
+			case "WANDERING":
+				this.wander();
+				break;
 			case "READING":
 				this.timeReading += dt;
 				this.student.drive -= dt;
@@ -69,16 +72,30 @@ LibraryActivity.prototype = {
 		return false;
 	},
 
+	wander: function() {
+		if (this.isFreeChair()) {
+			this.goToChair()
+		} else {
+			this.student.wanderInRoom(roomHandler.getRoom('library'));
+		}
+	},
+
+	isFreeChair: function() {
+		return (roomHandler.getChair() != null)
+	},
+
 	goToChair: function() {
 		var chair = roomHandler.getChair();
 		if (chair) {
-			chair.owner = this.student;
-			this.occupiedChair = chair;
-			this.student.occupiedItem = chair;
-			this.student.person.goToItem(chair);
+			//chair.owner = this.student;
+			// this.occupiedChair = chair;
+			// this.student.occupiedItem = chair;
+			// this.student.person.goToItem(chair);
+			this.student.occupyItem(chair);
 			this.state = "GOING TO CHAIR";
 		} else {
-
+			this.state = "WANDERING";
+			this.wander();
 		}
 	},
 

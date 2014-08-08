@@ -121,6 +121,10 @@ Room.prototype = {
 
 	dropItem: function(dropItem) {
 		this.items = this.items.filter(function(item) {return item !== dropItem})
+	},
+
+	acquireItem: function(item) {
+		debugger;
 	}
 }
 

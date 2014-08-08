@@ -21,5 +21,31 @@ Teacher.prototype = {
 		emitr.on("timePasses", function(dt) {
 			this.update(dt);
 		}.bind(this))
+	},
+
+	goToItem: function(item) {
+		debugger;
+	},
+
+	occupyItem: function(item) {
+		debugger;
+	},
+
+	goToRoom: function(room) {
+		debugger;
+	},
+
+	isInRoom: function(room) {
+		return this.person.isInRoom(room);
+	},
+
+	getName: function(room) {
+		return this.person.name;
+	},
+
+	wanderInRoom: function(room) {
+		debugger;
 	}
 }
+
+Teacher.implements(PersonHood);

@@ -46,7 +46,7 @@ SleepActivity.prototype = {
 			this.findBed();
 		} 
 		if (this.student.bed != null) {
-			this.student.person.goToItem(this.student.bed);
+			this.student.occupyItem(this.student.bed);
 		} else {
 			//console.log("There is no bed to go to!");
 		}

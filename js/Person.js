@@ -1,4 +1,4 @@
-function Person(map,x,y,speed, color, type, owner) {
+	function Person(map,x,y,speed, color, type, owner) {
 	this.owner = owner;
 	this.moveableEntity = new MovableEntity(x,y,speed);
 
@@ -30,8 +30,21 @@ Person.prototype = {
 
 	goToRoom: function(room) {
 		if (room != null) {
-			var coords = room.getRandomCoordinates();
-			this.moveableEntity.setNewDestination(coords);
+			if (!this.moveableEntity.isGoingToRoom(room)) {
+				var coords = room.getRandomCoordinates();
+				this.moveableEntity.setNewDestination(coords);
+			}
+		}
+	},
+
+	wanderInRoom: function(room) {
+		if (this.isInRoom(room)) {
+			if (!this.moveableEntity.isTravelling()) {
+				var coords = room.getRandomCoordinates();
+				this.moveableEntity.wanderToNewDestination(coords);
+			}
+		} else {
+			goToRoom(room);
 		}
 	},
 

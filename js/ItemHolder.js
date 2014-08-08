@@ -3,5 +3,6 @@ function ItemHolder() {
 }
 
 ItemHolder.prototype = {
-	dropItem: Function
+	dropItem: Function,
+	acquireItem: Function
 }

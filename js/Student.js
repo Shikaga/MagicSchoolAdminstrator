@@ -58,10 +58,44 @@ Student.prototype = {
 		if (this.bed == item) {
 			this.bed = null;
 		}
-		if (this.occupiedItem == item) {
-			this.bed = null;
+		if (this.occupiedItem) {
+			this.occupiedItem.looseOwner();
+			this.occupiedItem = null;
 		}
+	},
+
+	acquireItem: function(item) {
+		debugger;
+	},
+
+	occupyItem: function(item) {
+		this.dropItem();
+		this.occupiedItem = item;
+		this.occupiedItem.gainOwner(this);
+		this.goToItem(item);
+	},
+
+	goToItem: function(item) {
+		this.person.goToItem(item);
+	},
+
+	isInRoom: function(room) {
+		return this.person.isInRoom(room);
+	},
+
+	goToRoom: function(room) {
+		this.dropItem();
+		this.person.goToRoom(room);
+	},
+
+	getName: function() {
+		return this.person.name;
+	},
+
+	wanderInRoom: function(room) {
+		this.person.wanderInRoom(room);
 	}
 }
 
 Student.implements(ItemHolder);
+Student.implements(PersonHood);

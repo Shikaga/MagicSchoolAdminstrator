@@ -10,7 +10,9 @@ function Item(x,y,type,ip, location) {
 	this.container = this.type.createNewContainer();
 	this.syncCoords();
 	itemContainer.addChild(this.container);
-	//map.setChildIndex(this.container,1);
+	this.container.on("click", function(evt) {
+		emitr.trigger("itemSelected", this)
+	}.bind(this));
 
 	this.lastXChange = 0;
 	this.lastYChange = 0;
@@ -51,6 +53,22 @@ Item.prototype.getCoords = function() {
 
 Item.prototype.getType = function() {
 	return LibraryItems.bookshelf
+}
+
+Item.prototype.gainOwner = function(owner) {
+	if (this.owner) {
+		debugger;
+	} else {
+		this.owner = owner;
+	}
+}
+
+Item.prototype.looseOwner = function() {
+	this.owner = null;
+}
+
+Item.prototype.hasOwner = function() {
+	return (this.owner != null);
 }
 
 Item.prototype.getRoom = function() {
