@@ -72,10 +72,7 @@ Person.prototype = {
 	renderInit: function(map,moveableEntity) {
 		this.container = new ItemRenderer()
 			.addRect(this.color,-15,-10,30,30)
-			.addCircle("#D3AF8E",0,-10,10)
-			.on("mousedown", function(evt) {
-			emitr.trigger("studentSelected", this.owner);
-		}.bind(this)).done();
+			.addCircle("#D3AF8E",0,-10,10).done();
 
 		//this.setSpeechBubble();
 

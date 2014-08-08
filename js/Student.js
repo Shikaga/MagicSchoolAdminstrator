@@ -1,5 +1,8 @@
 function Student(map,x,y) {
 	this.person = new Person(map,x,y,60, "red", "Student", this)
+	this.person.container.on("mousedown", function(evt) {
+		emitr.trigger("studentSelected", this);
+	}.bind(this));
 
 	this.dorm = null;
 	this.group = null;
