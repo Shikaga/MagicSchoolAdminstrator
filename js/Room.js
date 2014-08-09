@@ -1,4 +1,7 @@
 function Room(map,objectPlacer,x,y,width,height) {
+	this.id = "room-" + Math.random();
+	this.doors = [];
+
 	this.op = objectPlacer;
 	this.x = x;
 	this.y = y;
@@ -11,7 +14,6 @@ function Room(map,objectPlacer,x,y,width,height) {
 	this.state = "normal";
 
 	this.items = [];
-
 
 	this.render();
 }

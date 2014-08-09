@@ -104,6 +104,23 @@ RoomHandler.prototype = {
 		return this.adjacentRooms;
 	},
 
+	getDoorMap: function() {
+		var roomMap = {}
+		this.rooms.forEach(function(room) {
+			var doorMap = {};
+			room.doors.forEach(function(door) {
+				doorMaap = {};
+				doorMaap[door.roomPair.room1.id] = 1;
+				doorMaap[door.roomPair.room2.id] = 1;
+				roomMap[door.id] = doorMaap;
+				doorMap[door.id] = 1;
+			})
+			roomMap[room.id] = doorMap;
+		})
+		var graph = new Graph(roomMap);
+		return graph;
+	},
+
 	identifyAdjacentRoomsAndAddDoors: function() {
 		var adjacentRoomsList = this.getAdjacentRooms();
 		adjacentRoomsList.forEach(function(adjacentRooms) {
@@ -115,13 +132,17 @@ RoomHandler.prototype = {
 			if (centre.x == -500) {
 				debugger;
 			}
-			this.addNewDoorBetweenAt(adjacentRooms, centre);
+			var door = this.addNewDoorBetweenAt(adjacentRooms, centre);
+			adjacentRooms.room1.doors.push(door);
+			adjacentRooms.room2.doors.push(door);
 		}.bind(this))
+		console.log(this.getDoorMap())
 	},
 
 	addNewDoorBetweenAt: function(roomPair, coords) {
 		var door = new Door(roomPair,coords);
 		this.doors.push(door);
+		return door;
 	},
 
 	getRoom: function(typeId) {
@@ -134,6 +155,36 @@ RoomHandler.prototype = {
 	getRoomTypeIn: function(coords) {
 		var room = this.getRoomIn(coords);
 		if (room) return room.type;
+	},
+	getDoorNear: function(coords) {
+		for (var i=0; i < this.doors.length; i++) {
+			var door = this.doors[i];
+			var distance = Math.sqrt((door.coords.x - coords.x) * (door.coords.x - coords.x) + (door.coords.y - coords.y) * (door.coords.y - coords.y))
+			if (distance < 20) {
+				return door;
+			}
+		};
+		return null;
+	},
+	getPointById: function(id) {
+		for (var i=0; i < this.doors.length; i++) {
+			if (this.doors[i].id == id) {
+				return this.doors[i];
+			}
+		}
+		for (var i=0; i < this.rooms.length; i++) {
+			if (this.rooms[i].id == id) {
+				return this.rooms[i];
+			}
+		}
+	},
+	getPointNear: function(coords) {
+		var door = this.getDoorNear(coords);
+		if (door) {
+			return door;
+		} else {
+			return this.getRoomIn(coords);
+		}
 	},
 	getRoomIn: function(coords) {
 		for (var i=0; i < this.rooms.length; i++) {

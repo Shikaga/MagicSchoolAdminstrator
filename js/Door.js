@@ -1,4 +1,5 @@
 function Door(roomPair, coords) {
+	this.id = "door-" + Math.random();
 	this.roomPair = roomPair;
 	this.coords = coords;
 	this.renderInit();
@@ -14,5 +15,9 @@ Door.prototype = {
 		this.square = new createjs.Shape();
 		this.square.graphics.beginFill("black").drawRect(0,0,20,20);
 		this.container.addChild(this.square);
+	},
+
+	getRandomCoordinates: function() {
+		return this.coords;
 	}
 }

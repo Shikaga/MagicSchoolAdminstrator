@@ -14,7 +14,6 @@ ClassActivity.prototype = {
 		switch (this.state) {
 			case "IDLE": 
 				this.tryGoToClass();
-				console.log("IDLE!");
 				break;
 			case "GOING TO CLASSROOM":
 				this.goToClassRoom();
@@ -23,7 +22,6 @@ ClassActivity.prototype = {
 				this.goToDesk();
 				break;
 			case "CLASS":
-				console.log("CLASS!");
 				break;
 		}
 	},
@@ -65,7 +63,6 @@ ClassActivity.prototype = {
 			if (desk && desk.owner == null) {
 				this.student.occupyItem(desk);
 			} else {
-				console.log("Cannot go to desk")
 			}
 		}
 	},
@@ -79,7 +76,6 @@ ClassActivity.prototype = {
 				this.goToClassRoom();
 			}
 		} else {
-			console.log("I don't have a classroom to go to");
 		}
 	}
 }
