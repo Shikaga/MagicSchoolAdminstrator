@@ -49,6 +49,7 @@
     	<script src="js/StudentGroup.js"></script>
     	<script src="js/LessonOrganiser.js"></script>
     	<script src="js/AdminInbox.js"></script>
+    	<script src="js/Door.js"></script>
 
     	<!-- Activities -->
     	<script src="js/LibraryActivity.js"></script>
@@ -95,6 +96,12 @@
 				map.x = 350;
 				map.y = 150;
 
+				roomContainer = new createjs.Container();
+				map.addChild(roomContainer);
+
+				doorContainer = new createjs.Container();
+				map.addChild(doorContainer);
+
 				itemContainer = new createjs.Container();
 				map.addChild(itemContainer);
 
@@ -102,6 +109,8 @@
 				map.addChild(personContainer);
 
 				roomHandler = new RoomHandler(map);
+				initializeRoomHandler();
+
 				lessonOrganiser = new LessonOrganiser();
 				var studentHandler = new StudentHandler(map, roomHandler);
 				var spawnCoords = roomHandler.spawnRoom.getRandomCoordinates();
@@ -140,6 +149,53 @@
 
 
 				// stage.addChild(new createjs.Shape()).setTransform(100,100).graphics.f("red").dc(0,0,50);
+			}
+
+			function initializeRoomHandler() {
+				var entranceHall = roomHandler.createRoom(100,-100,200,400, "entrancehall");
+				roomHandler.addRoom(entranceHall);
+				roomHandler.addRoom(roomHandler.createRoom(-300,-300,1000,200, "entrancehall"));
+
+				roomHandler.createAndAddRoom(300,100,"classroom");
+				roomHandler.createAndAddRoom(-100,100,"dorm");
+				roomHandler.createAndAddRoom(300,-100,"classroom");
+
+				roomHandler.createAndAddRoom(-100,-100, "library");
+				roomHandler.rooms[5].op.setRoom(roomHandler.rooms[5]);
+
+				roomHandler.rooms[5].op.itemTypeSelected = LibraryItems.bookshelf;
+				roomHandler.rooms[5].op.newItem(0,100);
+				roomHandler.rooms[5].op.itemPlaced();
+
+				roomHandler.rooms[5].op.itemTypeSelected = LibraryItems.chair;
+				roomHandler.rooms[5].op.newItem(100,100);
+				roomHandler.rooms[5].op.itemPlaced();
+
+				roomHandler.rooms[5].op.itemTypeSelected = LibraryItems.chair;
+				roomHandler.rooms[5].op.newItem(150,100);
+				roomHandler.rooms[5].op.itemPlaced();
+
+				roomHandler.rooms[5].op.itemTypeSelected = LibraryItems.chair;
+				roomHandler.rooms[5].op.newItem(100,150);
+				roomHandler.rooms[5].op.itemPlaced();
+
+				roomHandler.rooms[5].op.clearRoom();
+
+				roomHandler.createAndAddRoom(100,-500);
+
+				roomHandler.createAndAddRoom(-300,-100);
+				roomHandler.addRoom(roomHandler.createRoom(-500,-500,200,600));
+				roomHandler.createAndAddRoom(-300,-500);
+				roomHandler.createAndAddRoom(-100,-500);
+
+				roomHandler.createAndAddRoom(500,-100);
+
+				roomHandler.addRoom(roomHandler.createRoom(700,-500,200,600));
+				roomHandler.createAndAddRoom(500,-500);
+				roomHandler.createAndAddRoom(300,-500);
+				
+				roomHandler.spawnRoom = entranceHall;
+				roomHandler.identifyAdjacentRoomsAndAddDoors();
 			}
 
 			function update(event) {

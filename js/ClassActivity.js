@@ -84,5 +84,4 @@ ClassActivity.prototype = {
 	}
 }
 
-
 ClassActivity.implements(Activity);

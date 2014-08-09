@@ -91,8 +91,7 @@ Room.prototype = {
 		this.container = new createjs.Container();
 		this.container.x = x;
 		this.container.y = y;
-		map.addChild(this.container);
-		map.setChildIndex(this.container,0);
+		roomContainer.addChild(this.container);
 
 		this.square = new createjs.Shape();
 		this.setTypeColor();
