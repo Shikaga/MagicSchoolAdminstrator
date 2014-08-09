@@ -104,21 +104,26 @@ RoomHandler.prototype = {
 		return this.adjacentRooms;
 	},
 
-	getDoorMap: function() {
-		var roomMap = {}
+	calculateDoorMap: function() {
+		var allMap = {}
 		this.rooms.forEach(function(room) {
-			var doorMap = {};
+			var roomMap = {};
 			room.doors.forEach(function(door) {
-				doorMaap = {};
-				doorMaap[door.roomPair.room1.id] = 1;
-				doorMaap[door.roomPair.room2.id] = 1;
-				roomMap[door.id] = doorMaap;
-				doorMap[door.id] = 1;
+				doorMap = {};
+				doorMap[door.roomPair.room1.id] = 1;
+				doorMap[door.roomPair.room2.id] = 1;
+				allMap[door.id] = doorMap;
+
+				roomMap[door.id] = 1;
 			})
-			roomMap[room.id] = doorMap;
+			allMap[room.id] = roomMap;
 		})
-		var graph = new Graph(roomMap);
+		var graph = new Graph(allMap);
 		return graph;
+	},
+
+	getDoorMap: function() {
+		return this.doorMap;
 	},
 
 	identifyAdjacentRoomsAndAddDoors: function() {
@@ -136,7 +141,7 @@ RoomHandler.prototype = {
 			adjacentRooms.room1.doors.push(door);
 			adjacentRooms.room2.doors.push(door);
 		}.bind(this))
-		console.log(this.getDoorMap())
+		this.doorMap = this.calculateDoorMap();
 	},
 
 	addNewDoorBetweenAt: function(roomPair, coords) {
@@ -178,7 +183,7 @@ RoomHandler.prototype = {
 			}
 		}
 	},
-	getPointNear: function(coords) {
+	getLocationNear: function(coords) {
 		var door = this.getDoorNear(coords);
 		if (door) {
 			return door;

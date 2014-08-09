@@ -33,18 +33,7 @@ Person.prototype = {
 	},
 
 	goToRoom: function(room) {
-		var currentPoint = roomHandler.getPointNear(this.moveableEntity.getCoords());
-		if (room != null) {
-			if (!this.moveableEntity.isGoingToRoom(room)) {
-				var doorMap = roomHandler.getDoorMap();
-				var route = doorMap.findShortestPath(currentPoint.id, room.id)
-				if (route.length > 1) {
-					var nextPoint = roomHandler.getPointById(route[1])
-					var coords = nextPoint.getRandomCoordinates();//room.getRandomCoordinates();
-					this.moveableEntity.setNewDestination(coords);	
-				}
-			}
-		}
+		this.moveableEntity.goToRoom(room);
 	},
 
 	wanderInRoom: function(room) {

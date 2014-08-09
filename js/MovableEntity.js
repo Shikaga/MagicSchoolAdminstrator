@@ -40,6 +40,19 @@ MovableEntity.prototype = {
 		this.toY = coords.y;
 	},
 
+    goToRoom: function(room) {
+        var currentLocation = roomHandler.getLocationNear(this.getCoords());
+        if (room != null) {
+            var doorMap = roomHandler.getDoorMap();
+            var route = doorMap.findShortestPath(currentLocation.id, room.id)
+            if (route.length > 1) {
+                var nextPoint = roomHandler.getPointById(route[1])
+                var coords = nextPoint.getRandomCoordinates();
+                this.setNewDestination(coords);  
+            }
+        }
+    },
+
     wanderToNewDestination: function(coords) {
         this.movementSpeed = this.speed / 3;
         this.toX = coords.x;
