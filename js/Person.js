@@ -43,7 +43,7 @@ Person.prototype = {
 				this.moveableEntity.wanderToNewDestination(coords);
 			}
 		} else {
-			goToRoom(room);
+			this.goToRoom(room);
 		}
 	},
 

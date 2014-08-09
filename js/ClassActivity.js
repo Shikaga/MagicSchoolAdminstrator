@@ -63,6 +63,7 @@ ClassActivity.prototype = {
 			if (desk && desk.owner == null) {
 				this.student.occupyItem(desk);
 			} else {
+				this.student.person.wanderInRoom(this.classroom);
 			}
 		}
 	},
