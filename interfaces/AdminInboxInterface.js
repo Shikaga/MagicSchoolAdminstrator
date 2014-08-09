@@ -56,11 +56,15 @@ AdminInboxInterface = React.createClass({
 		debugger;
 	},
 	render: function() {
+		var style = {
+			border: "1px solid",
+			margin: "2px"
+		}
 		if (this.state.inbox) {
-			return <div>
+			return <div style={style}>
+				<h1>Inbox</h1>
 				<AdminSubjectList items={this.state.inbox.items} itemSelected={this.itemSelected}></AdminSubjectList>
 				<AdminBody item={this.state.selectedItem}></AdminBody>
-				<button onClick={this.close}>Close</button>
 			</div>
 		} else {
 			return <div></div>
