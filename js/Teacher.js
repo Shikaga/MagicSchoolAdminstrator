@@ -32,7 +32,6 @@ Teacher.prototype = {
 	},
 
 	goToRoom: function(room) {
-		debugger;
 		this.person.goToRoom(room);
 	},
 

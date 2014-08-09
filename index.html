@@ -7,6 +7,7 @@
 				background-color: white;
 				border: solid;
 				right: 0px;
+				width: 200px;
 			}
 		</style>
 		<script src="lib/createjs-2013.12.12.min.js"></script>
@@ -23,6 +24,7 @@
     	<script type="text/jsx" src="interfaces/ClockInterface.js"></script>
     	<script type="text/jsx" src="interfaces/ItemsInterface.js"></script>
     	<script type="text/jsx" src="interfaces/ItemInterface.js"></script>
+    	<script type="text/jsx" src="interfaces/AdminInboxInterface.js"></script>
 
     	<!-- Interfaces -->
     	<script src="js/ItemHolder.js"></script>
@@ -46,6 +48,7 @@
     	<script src="js/Item.js"></script>
     	<script src="js/StudentGroup.js"></script>
     	<script src="js/LessonOrganiser.js"></script>
+    	<script src="js/AdminInbox.js"></script>
 
     	<!-- Activities -->
     	<script src="js/LibraryActivity.js"></script>
@@ -62,6 +65,7 @@
 			<span id="clockInterface"></span>
 		</div>
 		<div class="menu" >
+			<div id="inboxInterface"></div>
 			<div id="roomEditor"></div>
 			<div id="studentInteface"></div>
 			<div id="timetableInterface"></div>
@@ -69,15 +73,6 @@
 			<div id="itemsInterface"></div>
 			<div id="itemInterface"></div>
 		</div>
-		<script type="text/jsx">
-			/** @jsx React.DOM */
-			React.renderComponent(<RoomEditor/>,document.getElementById('roomEditor'));
-			React.renderComponent(<StudentInterface/>,document.getElementById('studentInteface'));
-			React.renderComponent(<TimetableInterface/>,document.getElementById('timetableInterface'));
-			React.renderComponent(<ClockInterface/>,document.getElementById('clockInterface'));
-			React.renderComponent(<ItemsInterface/>,document.getElementById('itemsInterface'));
-			React.renderComponent(<ItemInterface/>,document.getElementById('itemInterface'));
-		</script>
 		<canvas width="1000" height="800" id="demoCanvas">Could not load Canvas. Try another browser?</canvas>
 		<script>
 			emitr = new emitr();
@@ -111,6 +106,27 @@
 				var studentHandler = new StudentHandler(map, roomHandler);
 				var spawnCoords = roomHandler.spawnRoom.getRandomCoordinates();
 				teacher = new Teacher(map, spawnCoords.x, spawnCoords.y);
+				adminInbox = new AdminInbox();
+				adminInbox.addItem({
+					subject: "Dormitaries",
+					body: "It is important that your students get a good nights sleep. " + 
+						"Ensure that you have a room setup as a Dormitary and that it is " + 
+						"filled with enough beds to satisfy all your students! " + 
+						"PS: Don't worry about staff. They are hardcore.",
+					isComplete: function() {
+						return false;
+					}
+				})
+				adminInbox.addItem({
+					subject: "Classrooms",
+					body: "Learning! That is what we are all here to do, but your " +
+						"students are going to struggle to learn anything without a " + 
+						"well equiped classroom. Make sure that you set a classroom and " + 
+						"fill it with enough desks for all your students",
+					isComplete: function() {
+						return false;
+					}
+				})
 
 				createjs.Ticker.addEventListener("tick", update);
 
@@ -136,6 +152,16 @@
 				lessonOrganiser.update();
 				stage.update();
 			}
+		</script>
+		<script type="text/jsx">
+			/** @jsx React.DOM */
+			React.renderComponent(<RoomEditor/>,document.getElementById('roomEditor'));
+			React.renderComponent(<StudentInterface/>,document.getElementById('studentInteface'));
+			React.renderComponent(<TimetableInterface/>,document.getElementById('timetableInterface'));
+			React.renderComponent(<ClockInterface/>,document.getElementById('clockInterface'));
+			React.renderComponent(<ItemsInterface/>,document.getElementById('itemsInterface'));
+			React.renderComponent(<ItemInterface/>,document.getElementById('itemInterface'));
+			React.renderComponent(<AdminInboxInterface/>,document.getElementById('inboxInterface'));
 		</script>
 	</body>
 </html>
