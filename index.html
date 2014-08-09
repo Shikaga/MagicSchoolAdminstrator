@@ -108,7 +108,7 @@
 				teacher = new Teacher(map, spawnCoords.x, spawnCoords.y);
 				adminInbox = new AdminInbox();
 				adminInbox.addItem({
-					subject: "Dormitaries",
+					subject: "Provide Dormitaries",
 					body: "It is important that your students get a good nights sleep. " + 
 						"Ensure that you have a room setup as a Dormitary and that it is " + 
 						"filled with enough beds to satisfy all your students! " + 
@@ -116,9 +116,9 @@
 					isComplete: function() {
 						return false;
 					}
-				})
+				});
 				adminInbox.addItem({
-					subject: "Classrooms",
+					subject: "Equip Classrooms",
 					body: "Learning! That is what we are all here to do, but your " +
 						"students are going to struggle to learn anything without a " + 
 						"well equiped classroom. Make sure that you set a classroom and " + 
@@ -126,8 +126,16 @@
 					isComplete: function() {
 						return false;
 					}
+				});
+				adminInbox.addItem({
+					subject: "Set your Timetable",
+					body: "Your classrooms are of little use without lessons. " +
+						"Set your timetable to include every subject on the " +
+						"syllabus",
+					isComplete: function() {
+						return false;
+					}
 				})
-
 				createjs.Ticker.addEventListener("tick", update);
 
 

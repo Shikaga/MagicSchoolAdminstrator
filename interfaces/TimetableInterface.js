@@ -1,4 +1,28 @@
 /** @jsx React.DOM */
+
+TimetablePeriodInterface = React.createClass({
+	lessonChanged: function() {
+		this.props.lessonChanged({
+			time: this.props.time,
+			lessonId: event.target.value
+		})
+	},
+	render: function() {
+		var options = [];
+		for (var id in this.props.syllabus) {
+			lesson = this.props.syllabus[id];
+			options.push(<option value={lesson.id}>{lesson.name}</option>)
+		};
+
+		return (<div>
+			<span>{this.props.time}</span>
+			<select onChange={this.lessonChanged} value={this.props.selected}>
+				{options}
+			</select>
+		</div>)
+	}
+})
+
 TimetableInterface = React.createClass({
 	getInitialState: function() {
 
@@ -20,27 +44,26 @@ TimetableInterface = React.createClass({
 		})
 	},
 
-	periodChanged: function(event) {
-		this.state.timetable[event.target.attributes.getNamedItem("data").value] = event.target.value;
-
+	lessonChanged: function(event) {
+		this.state.timetable[event.time] = this.state.syllabus[event.lessonId];
 		this.setState({
 			timetable: this.state.timetable
-		})
+			})
 	},
 
 	render: function() {
 		var timetableInterface;
 		if (this.state.timetable) {
 			var periods = [];
-			for (var type in this.state.timetable) {
-				var options = [];
-				this.state.syllabus.forEach(function(topic) {
-					options.push(<option value={topic}>{topic}</option>)
-				})
+			for (var time in this.state.timetable) {
 				periods.push(
-			<div><span>{type}</span><select data={type} onChange={this.periodChanged} value={this.state.timetable[type]}>
-				{options}
-			</select></div>)
+					<TimetablePeriodInterface 
+						time={time} 
+						syllabus={this.state.syllabus} 
+						selected={this.state.timetable[time].id}
+						lessonChanged={this.lessonChanged}>
+					</TimetablePeriodInterface>
+				);
 			}
 			timetableInterface = (<div>
 				<h1>Timetable</h1>

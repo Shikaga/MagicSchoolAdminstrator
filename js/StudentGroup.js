@@ -10,11 +10,11 @@ StudentGroup.prototype = {
 	},
 
 	getRoomToBeIn: function(hour) {
-		var subject = this.syllabus.timetable[hour];
+		var lesson = this.syllabus.timetable[hour];
 		var room;
-		if (subject == "class") {
+		if (lesson.type == "lesson") {
 			room = roomHandler.getRoom("classroom")
-		} else if (subject == "freetime") {
+		} else if (lesson == "freetime") {
 			//room = roomHandler.getRoom("dorm")
 		}
 		return room;
