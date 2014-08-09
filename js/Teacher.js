@@ -43,6 +43,10 @@ Teacher.prototype = {
 		return this.person.name;
 	},
 
+	getRoomIn: function() {
+		debugger;
+	},
+
 	wanderInRoom: function(room) {
 		debugger;
 	}

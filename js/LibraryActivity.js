@@ -11,9 +11,11 @@ LibraryActivity.prototype = {
 		this.reduceInertia(dt);
 		switch(this.state) {
 			case "IDLE":
-				this.inertia = 20;
-				this.goToBookshelf()
+				this.goToLibrary();
 				break;
+			case "GO TO LIBRARY":
+				this.goToLibrary();
+				break
 			case "GETTING BOOK": 
 				if (this.ifArrived(roomHandler.getBookshelf())) {
 					this.goToChair();
@@ -44,6 +46,24 @@ LibraryActivity.prototype = {
 		if (this.inertia < 0) {
 			this.inertia  = 0;
 		}
+	},
+
+	goToLibrary: function() {
+		this.state = "GO TO LIBRARY";
+		if (this.inLibrary()) {
+			this.goToBookshelf()
+		} else {
+			var library = roomHandler.getRoom('library');
+			this.student.goToRoom(library);
+		}
+	},
+
+	inLibrary: function() {
+		var room = this.student.getRoomIn();
+		if (room.type.id == "library") {
+			return true;
+		}
+		return false;
 	},
 
 	goToBookshelf: function() {

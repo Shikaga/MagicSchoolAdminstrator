@@ -30,6 +30,9 @@ Room.prototype = {
 	},
 
 	containsCoords: function(coords) {
+		if (coords == null) return false;
+		if (coords.x == null) return false;
+		if (coords.y == null) return false;
 		if (coords.x < this.x) return false;
 		if (coords.x > this.x + this.width) return false;
 		if (coords.y < this.y) return false;

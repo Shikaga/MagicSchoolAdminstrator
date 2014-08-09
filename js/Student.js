@@ -97,6 +97,10 @@ Student.prototype = {
 
 	wanderInRoom: function(room) {
 		this.person.wanderInRoom(room);
+	},
+
+	getRoomIn: function() {
+		return this.person.getRoomIn();
 	}
 }
 

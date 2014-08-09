@@ -7,6 +7,7 @@ PersonHood.prototype = {
 	goToRoom: Function,
 	goToItem: Function,
 	occupyItem: Function,
+	getRoomIn: Function,
 	getName: Function,
 	wanderInRoom: Function
 }

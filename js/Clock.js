@@ -24,6 +24,9 @@ Clock.prototype = {
 		var date = new Date(this.millisecondsPassed);
 		var newClock = date.getHours() + ":" + date.getMinutes();
 		if (newClock !== this.clock) {
+			if (date.getHours() == 0 && date.getMinutes() == 0) {
+				emitr.trigger("newDay");
+			}
 			emitr.trigger("newClock", newClock);
 		}
 		this.clock = newClock;

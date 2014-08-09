@@ -9,7 +9,6 @@ SleepActivity.prototype = {
 	update: function(dt) {
 		switch (this.state) {
 			case "IDLE": 
-				console.log("IDLE!")
 				this.trySleep(dt);
 				break;
 			case "SLEEP":
@@ -55,7 +54,6 @@ SleepActivity.prototype = {
 	findBed: function() {
 		var bed = roomHandler.getFreeBed();
 		if (bed == null) {
-			console.log("I can't find a bed!")
 		} else {
 			this.student.bed = bed;
 			this.student.bed.owner = this.student;

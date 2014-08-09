@@ -10,6 +10,11 @@ function StudentHandler(map, roomHandler) {
 		this.addStudent(map);
 	}.bind(this))
 
+	emitr.on("newDay", function() {
+		this.addStudent(map);
+		this.addStudent(map);
+	}.bind(this))
+
 }
 
 StudentHandler.prototype = {
