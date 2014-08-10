@@ -71,9 +71,11 @@ MovableEntity.prototype = {
     },
 
     wanderInRoom: function(room) {
-        this.state = "WANDERING";
-        this.wanderingRoom = room;
-        this._wanderToNewPlaceInRoom();
+        if (this.state !== "WANDERING") {
+            this.state = "WANDERING";
+            this.wanderingRoom = room;
+            this._wanderToNewPlaceInRoom();
+        }
     },
 
     isTravelling: function() {
