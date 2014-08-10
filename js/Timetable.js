@@ -51,8 +51,8 @@ Timetable.prototype = {
 		for (var i=0; i < 24; i++) {
 			this.timetable[i] = this.syllabus.freetime
 		}
-		this.timetable[9] = this.syllabus.theoryOfMagic;
-		this.timetable[11] = this.syllabus.latin;
+		//this.timetable[9] = this.syllabus.theoryOfMagic;
+		//this.timetable[11] = this.syllabus.latin;
 
 		for (var i=0; i < 6; i++) {
 			this.timetable[i] = this.syllabus.bedtime;

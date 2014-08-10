@@ -47,7 +47,7 @@ Item.prototype.destroy = function() {
 
 Item.prototype.getCoords = function() {
 	return {
-		x: this.moveableEntity.x, y: this.moveableEntity.y
+		x: this.moveableEntity.coords.x, y: this.moveableEntity.coords.y
 	}
 }
 
@@ -76,12 +76,12 @@ Item.prototype.getRoom = function() {
 }
 
 Item.prototype.setNewCoords = function(coords) {
-	this.moveableEntity.x = coords.x;
-	this.moveableEntity.y = coords.y;
+	this.moveableEntity.coords.x = coords.x;
+	this.moveableEntity.coords.y = coords.y;
 	this.syncCoords();
 }
 
 Item.prototype.syncCoords = function() {
-	this.container.x = this.moveableEntity.x;
-	this.container.y = this.moveableEntity.y;
+	this.container.x = this.moveableEntity.coords.x;
+	this.container.y = this.moveableEntity.coords.y;
 }

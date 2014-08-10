@@ -1,5 +1,5 @@
-function Student(map,x,y) {
-	this.person = new Person(map,x,y,60, "red", "Student", this)
+function Student(x,y) {
+	this.person = new Person(x,y,60, "red", "Student", this)
 	this.person.container.on("mousedown", function(evt) {
 		emitr.trigger("studentSelected", this);
 	}.bind(this));
@@ -101,6 +101,10 @@ Student.prototype = {
 
 	getRoomIn: function() {
 		return this.person.getRoomIn();
+	},
+
+	pickupItem: function() {
+		debugger;
 	}
 }
 

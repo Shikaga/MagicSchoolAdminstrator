@@ -1,23 +1,44 @@
-	function Person(map,x,y,speed, color, type, owner) {
+	function Person(x,y,speed, color, type, owner) {
 	this.owner = owner;
-	this.moveableEntity = new MovableEntity(x,y,speed);
+	this.moveableEntity = new MovableEntity(x,y,speed,speed/3);
 
 	this.type = type;
 	this.name = chance.first() + " " + chance.last();
 	this.color = color;
+
+	this.itemToGoTo = null;
+
+	this.state = "IDLE";
+
+	this.items = [];
 
 	this.renderInit(map, this.moveableEntity);
 }
 
 Person.prototype = {
 	update: function(dt) {
+
+		if (this.state == "GO TO ITEM") {
+			this.goToItem(this.itemToGoTo);
+		}
+
 		this.moveableEntity.update(dt);
 		this.render();
 	},
 
 	render: function() {
-		this.container.x = this.moveableEntity.x;
-		this.container.y = this.moveableEntity.y;
+		this.container.x = this.moveableEntity.coords.x;
+		this.container.y = this.moveableEntity.coords.y;
+		this.items.forEach(function(item) {
+			item.setNewCoords({
+				x: this.container.x + 30,
+				y: this.container.y + 30
+			})
+		}.bind(this))
+	},
+
+	getCoords: function() {
+		return this.moveableEntity.getCoords();
 	},
 
 	isInRoom: function(room) {
@@ -25,34 +46,52 @@ Person.prototype = {
 	},
 
 	getRoomIn: function() {
-		return roomHandler.getRoomIn({x: this.moveableEntity.x, y: this.moveableEntity.y})
+		return roomHandler.getRoomIn(this.moveableEntity.coords)
 	},
 
 	getRoomTypeIn: function() {
-		return roomHandler.getRoomTypeIn({x: this.moveableEntity.x, y: this.moveableEntity.y})
+		return roomHandler.getRoomTypeIn(this.moveableEntity.coords)
+	},
+
+	teleportTo: function(coords) {
+		this.moveableEntity.setNewCoords(coords)
 	},
 
 	goToRoom: function(room) {
 		this.moveableEntity.goToRoom(room);
 	},
 
+	goToCoords: function(coords) {
+		this.moveableEntity.setNewDestination(coords);
+	},
+
+	stop: function() {
+		this.moveableEntity.stop();
+	},
+
 	wanderInRoom: function(room) {
 		if (this.isInRoom(room)) {
-			if (!this.moveableEntity.isTravelling()) {
-				var coords = room.getRandomCoordinates();
-				this.moveableEntity.wanderToNewDestination(coords);
-			}
+		//	if (!this.moveableEntity.isTravelling()) {
+		//		var coords = room.getRandomCoordinates();
+				this.moveableEntity.wanderInRoom(room);
+			// }
 		} else {
 			this.goToRoom(room);
 		}
 	},
 
 	goToItem: function(item) {
+		this.itemToGoTo = item;
 		var coords = item.getCoords();
 		this.moveableEntity.setNewDestination({
 			x: coords.x,
 			y: coords.y
 		});
+	},
+
+	pickupItem: function(item) {
+		this.goToItem(item);
+		this.state = "GO TO ITEM";
 	},
 
 	setSpeechBubble: function(text) {
@@ -61,7 +100,10 @@ Person.prototype = {
 			.addText("Reading", "#000", 0, -50)
 			.done()
 		this.container.addChild(this.speechBubble);
+	},
 
+	isTravelling: function() {
+		return this.moveableEntity.isTravelling();
 	},
 
 	clearSpeechBubble: function() {
@@ -75,8 +117,8 @@ Person.prototype = {
 
 		//this.setSpeechBubble();
 
-		this.container.x = moveableEntity.x;
-		this.container.y = moveableEntity.y;
+		this.container.x = moveableEntity.coords.x;
+		this.container.y = moveableEntity.coords.y;
 		personContainer.addChild(this.container)
 		//map.setChildIndex(this.container,2);
 

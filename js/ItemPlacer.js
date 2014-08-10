@@ -53,14 +53,12 @@ ItemPlacer.prototype.getGridPosition = function(room, x,y) {
 
 ItemPlacer.prototype.moveItem = function(item, event) {
 	console.log(event.localX, event.localY)
-	var room = roomHandler.getRoomIn({x: item.moveableEntity.x, y: item.moveableEntity.y});
+	var room = roomHandler.getRoomIn({x: item.moveableEntity.coords.x, y: item.moveableEntity.coords.y});
 	this.setRoom(room);
-	var coords = this.getGridPosition(room, item.moveableEntity.x + event.localX - room.x, 
-		item.moveableEntity.y + event.localY - room.y)
-	console.log(coords);
-	console.log(room.x, room.y)
-	item.moveableEntity.x = coords.x + room.x;
-	item.moveableEntity.y = coords.y + room.y;
+	var coords = this.getGridPosition(room, item.moveableEntity.coords.x + event.localX - room.x, 
+		item.moveableEntity.coords.y + event.localY - room.y)
+	item.moveableEntity.coords.x = coords.x + room.x;
+	item.moveableEntity.coords.y = coords.y + room.y;
 	item.syncCoords();
 }
 
@@ -86,6 +84,7 @@ ItemPlacer.prototype.newItem = function(x,y) {
 			this.room.addItem(this.item);
 		}
 	}
+	return this.item;
 }
 
 ItemPlacer.prototype.itemPlaced = function(x,y) {

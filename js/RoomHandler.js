@@ -1,4 +1,4 @@
-function RoomHandler(map) {
+function RoomHandler() {
 	this.rooms = [];
 	this.doors = [];
 	this.op = new ItemPlacer();
