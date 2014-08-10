@@ -91,6 +91,16 @@ describe("Person", function() {
 		expect(person.getCoords()).toEqual({x: 40, y: 70});
 		expect(person.isTravelling()).toEqual(true);
 
+		var newCoordsRequested = false;
+
+		Room.prototype.getRandomCoordinates = function() {
+			newCoordsRequested = true;
+		}
+		person.wanderInRoom(room1);
+		expect(newCoordsRequested).toEqual(false);
+
+
+
 		person.stop()
 		person.update(1.5);
 		expect(person.getCoords()).toEqual({x: 40, y: 70});
