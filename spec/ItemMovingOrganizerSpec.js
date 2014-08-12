@@ -5,6 +5,9 @@ describe("ItemMovingOrganizer", function() {
 	personContainer = {
 		addChild: function() {}
 	}
+	itemContainer = {
+		addChild: function() {}
+	}
 	map = {
 		addChild: function(){}
 	}
@@ -21,22 +24,16 @@ describe("ItemMovingOrganizer", function() {
 		var itemMovingOrganizer = new ItemMovingOrganizer();
 		var footman = new Footman(10,10);
 		itemMovingOrganizer.addMover(footman)
-		var item = {
-			coords: {x: 70, y: 10},
-			getCoords: function() {
-				return this.coords
-			},
-			setNewCoords: function(coords) {
-				this.coords = coords
-			},
-			looseLocation: function() {
 
-			},
-			gainLocation: function() {
-
-			}
+		var item = new Item(70,10, LibraryItems.chair);
+		var ghostItem = new Item(70,70, LibraryItems.chair);
+		var destroyCalled = false;
+		ghostItem.destroy = function() {
+			destroyCalled = true;
 		}
-		itemMovingOrganizer.moveItem(item, {x: 70, y: 70});
+
+
+		itemMovingOrganizer.moveItem(item, ghostItem);
 		footman.update(0.5);
 		expect(footman.getCoords()).toEqual({x: 40, y: 10});
 		footman.update(0.5);
@@ -52,5 +49,6 @@ describe("ItemMovingOrganizer", function() {
 		footman.update(0.5);
 		expect(footman.getCoords()).toEqual({x: 40, y: 70});
 		expect(item.getCoords()).toEqual({x: 70, y: 70});
+		expect(destroyCalled).toEqual(true);
 	})
 })

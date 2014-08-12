@@ -1,6 +1,6 @@
 //function Item(itemPlacer,type,container,room) {
-function Item(x,y,type,ip, location) {
-	this.ip = ip;
+function Item(x,y,type,id,location) {
+	this.id = id;
 	this.type = type;
 	this.owner = null;
 	this.location = location; // A room or person 
@@ -60,7 +60,10 @@ Item.prototype.destroy = function() {
 }
 
 Item.prototype.getCoords = function() {
-	return this.moveableEntity.coords;
+	return {
+		x: this.moveableEntity.coords.x,
+		y: this.moveableEntity.coords.y
+	};
 }
 
 Item.prototype.getType = function() {

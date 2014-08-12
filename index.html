@@ -126,13 +126,19 @@
 
 				roomHandler.op.setRoom(roomHandler.spawnRoom);
 				roomHandler.op.itemTypeSelected = LibraryItems.chair;
+				
 				var chair = roomHandler.op.newItem(0,100);
 				roomHandler.op.itemPlaced();
+
+				var ghostChair = roomHandler.op.newItem(200,200);
+				roomHandler.op.itemPlaced();
+				ghostChair.container.alpha = 0.5;
+
 				roomHandler.op.clearRoom();
 
 				var itemMovingOrganizer = new ItemMovingOrganizer();
 				itemMovingOrganizer.addMover(footman);
-				itemMovingOrganizer.moveItem(chair, {x: 200, y: 200})
+				itemMovingOrganizer.moveItem(chair, ghostChair)
 
 				adminInbox = new AdminInbox();
 				adminInbox.addItem({

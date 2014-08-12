@@ -104,7 +104,9 @@ Person.prototype = {
 			y: coords.y
 		},function() {
 			this.moveItems()
-			callback();
+			if (callback) {
+				callback();
+			}
 		}.bind(this));
 	},
 
