@@ -78,10 +78,17 @@ ItemPlacer.prototype.newItem = function(x,y) {
 		console.log("Placing ", this.itemTypeSelected);
 		var legalCoords = this.getGridPosition(this.room,x,y)
 		if (legalCoords) {
-			this.item = new Item(legalCoords.x + this.room.x, 
+			var ghostItem = new Item(legalCoords.x + this.room.x, 
 				legalCoords.y + this.room.y, 
 				this.itemTypeSelected, this, this.room);
+			ghostItem.container.alpha = 0.5;
+			
+			var randomCoords = roomHandler.spawnRoom.getRandomCoordinates();
+			this.item = new Item(randomCoords.x, 
+				randomCoords.y, 
+				this.itemTypeSelected, this, this.room);
 			this.room.addItem(this.item);
+			itemMovingOrganizer.moveItem(this.item, ghostItem);
 		}
 	}
 	return this.item;

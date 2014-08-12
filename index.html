@@ -113,6 +113,10 @@
 
 				roomHandler = new RoomHandler(map);
 				initializeRoomHandler();
+				itemMovingOrganizer = new ItemMovingOrganizer();
+				spawnCoords = roomHandler.spawnRoom.getRandomCoordinates();
+				footman = new Footman(spawnCoords.x, spawnCoords.y);
+				itemMovingOrganizer.addMover(footman);
 
 				lessonOrganiser = new LessonOrganiser();
 				var studentHandler = new StudentHandler(roomHandler);
@@ -120,25 +124,20 @@
 				var spawnCoords = roomHandler.spawnRoom.getRandomCoordinates();
 				teacher = new Teacher(spawnCoords.x, spawnCoords.y);
 
-				spawnCoords = roomHandler.spawnRoom.getRandomCoordinates();
 				//debugger;
-				footman = new Footman(spawnCoords.x, spawnCoords.y);
 
 				roomHandler.op.setRoom(roomHandler.spawnRoom);
 				roomHandler.op.itemTypeSelected = LibraryItems.chair;
-				
+
 				var chair = roomHandler.op.newItem(0,100);
 				roomHandler.op.itemPlaced();
 
-				var ghostChair = roomHandler.op.newItem(200,200);
-				roomHandler.op.itemPlaced();
-				ghostChair.container.alpha = 0.5;
+				// var ghostChair = roomHandler.op.newItem(200,200);
+				// roomHandler.op.itemPlaced();
 
 				roomHandler.op.clearRoom();
 
-				var itemMovingOrganizer = new ItemMovingOrganizer();
-				itemMovingOrganizer.addMover(footman);
-				itemMovingOrganizer.moveItem(chair, ghostChair)
+				// itemMovingOrganizer.moveItem(chair, ghostChair)
 
 				adminInbox = new AdminInbox();
 				adminInbox.addItem({
