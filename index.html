@@ -52,6 +52,7 @@
     	<script src="js/AdminInbox.js"></script>
     	<script src="js/Door.js"></script>
     	<script src="js/Footman.js"></script>
+    	<script src="js/ItemMovingOrganizer.js"></script>
 
     	<!-- Activities -->
     	<script src="js/LibraryActivity.js"></script>
@@ -129,9 +130,9 @@
 				roomHandler.op.itemPlaced();
 				roomHandler.op.clearRoom();
 
-				//footman.pickupItem(chair);
-				footman.person.wanderInRoom(roomHandler.spawnRoom);
-
+				var itemMovingOrganizer = new ItemMovingOrganizer();
+				itemMovingOrganizer.addMover(footman);
+				itemMovingOrganizer.moveItem(chair, {x: 200, y: 200})
 
 				adminInbox = new AdminInbox();
 				adminInbox.addItem({

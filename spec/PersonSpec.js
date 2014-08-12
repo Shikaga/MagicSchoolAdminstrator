@@ -96,7 +96,7 @@ describe("Person", function() {
 		Room.prototype.getRandomCoordinates = function() {
 			newCoordsRequested = true;
 		}
-		person.wanderInRoom(room1);
+		person.wanderInRoom(room1); //Redundant
 		expect(newCoordsRequested).toEqual(false);
 
 
@@ -105,6 +105,49 @@ describe("Person", function() {
 		person.update(1.5);
 		expect(person.getCoords()).toEqual({x: 40, y: 70});
 		expect(person.isTravelling()).toEqual(false);
+
+
+		Room.prototype.getRandomCoordinates = function() {
+			return {x: 10, y: 70}
+		}
+		person.wanderInRoom(room1); //start again
+		person.update(1.5);
+		expect(person.getCoords()).toEqual({x: 10, y: 70});
+		expect(person.isTravelling()).toEqual(true);
+
+		person.goToCoords({x: 40, y: 70});
+		person.update(5);
+		expect(person.getCoords()).toEqual({x: 40, y: 70});
+		expect(person.isTravelling()).toEqual(false);
+
+		person.wanderInRoom(room1); //start again
+		person.update(1.5);
+		expect(person.getCoords()).toEqual({x: 10, y: 70});
+		expect(person.isTravelling()).toEqual(true);
+	});
+
+	it("walks people to items", function() {
+		var person = new Person(10,10,60);
+		var item = {
+			getCoords: function() {
+				return {x: 70, y: 10}
+			}
+		}
+		var arrived = false;
+		person.goToItem(item, function() {
+			arrived = true;
+		});
+
+		expect(person.getCoords()).toEqual({x: 10, y: 10});
+
+		person.update(0.1);
+		expect(person.getCoords()).toEqual({x: 16, y: 10});
+		expect(person.isTravelling()).toEqual(true);
+
+		person.update(0.9);
+		expect(person.getCoords()).toEqual({x: 70, y: 10});
+		expect(person.isTravelling()).toEqual(false);
+		expect(arrived).toEqual(true);
 	});
 
 });

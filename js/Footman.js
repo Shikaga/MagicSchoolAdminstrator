@@ -20,8 +20,8 @@ Footman.prototype = {
 	goToRoom: function(room) {
 		this.person.goToRoom(room);
 	},
-	goToItem: function(item) {
-		this.person.goToItem(room);
+	goToItem: function(item, callback) {
+		this.person.goToItem(item, callback);
 	},
 	occupyItem: function(item) {
 		this.person.occupyItem(item);
@@ -32,17 +32,24 @@ Footman.prototype = {
 	getName: function() {
 		return this.person.name;
 	},
-	pickupItem: function(item) {
-		this.person.pickupItem(item);
+	pickupItem: function(item, callback) {
+		this.person.pickupItem(item, callback);
 	},
 	wanderInRoom: function(room) {
 		this.person.wanderInRoom(room);
 	},
-	dropItem: function() {
-		debugger
+	dropItem: function(item) {
+		this.person.dropItem(item);
 	},
 	acquireItem: function() {
 		debugger
+	},
+	getCoords: function() {
+		return this.person.getCoords();
+	},
+
+	goToCoords: function(coords, callback) {
+		return this.person.goToCoords(coords, callback);
 	}
 }
 

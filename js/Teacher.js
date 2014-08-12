@@ -45,6 +45,14 @@ Teacher.prototype = {
 
 	pickupItem: function() {
 		debugger;
+	},
+
+	getCoords: function() {
+		return this.person.getCoords();
+	},
+
+	goToCoords: function(coords, callback) {
+		return this.person.goToCoords(coords, callback);
 	}
 }
 

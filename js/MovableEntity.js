@@ -20,11 +20,12 @@ MovableEntity.prototype = {
 			if (distanceToDestination <= distanceTravelled) {
 				this.coords.x = this.toCoords.x;
 				this.coords.y = this.toCoords.y;
-				if (this.state == "WANDERING") {
-					this._wanderToNewPlaceInRoom();
-				} else {
-					this.toCoords.x = null;
-					this.toCoords.y = null;
+				this.toCoords.x = null;
+				this.toCoords.y = null;
+				if (this.arrivedCalledback) {
+					var arrivedCalledback = this.arrivedCalledback;
+					this.arrivedCalledback = null;
+					arrivedCalledback();
 				}
 			} else {
 				this.coords.x += dx/distanceToDestination * distanceTravelled;
@@ -37,9 +38,10 @@ MovableEntity.prototype = {
 		return room.containsCoords(this.toCoords)
 	},
 
-	setNewDestination: function(coords) {
+	setNewDestination: function(coords,callback) {
 		this.movementSpeed = this.speed;
 		this.toCoords = coords;
+		this.arrivedCalledback = callback;
 	},
 
 	setNewCoords: function(coords) {
@@ -70,12 +72,10 @@ MovableEntity.prototype = {
 		this.toCoords = coords;
 	},
 
-	wanderInRoom: function(room) {
-		if (this.state !== "WANDERING") {
-			this.state = "WANDERING";
-			this.wanderingRoom = room;
-			this._wanderToNewPlaceInRoom();
-		}
+	wanderInRoom: function(room, callback) {
+		this.arrivedCalledback = callback;
+		this.wanderingRoom = room;
+		this._wanderToNewPlaceInRoom();
 	},
 
 	isTravelling: function() {

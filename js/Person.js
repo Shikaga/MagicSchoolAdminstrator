@@ -9,6 +9,7 @@
 	this.itemToGoTo = null;
 
 	this.state = "IDLE";
+	this.wanderingRoom = null;
 
 	this.items = [];
 
@@ -17,24 +18,23 @@
 
 Person.prototype = {
 	update: function(dt) {
-
-		if (this.state == "GO TO ITEM") {
-			this.goToItem(this.itemToGoTo);
-		}
-
 		this.moveableEntity.update(dt);
+		this.moveItems();
 		this.render();
+	},
+
+	moveItems: function() {
+		this.items.forEach(function(item) {
+			item.setNewCoords({
+				x: this.moveableEntity.getCoords().x,
+				y: this.moveableEntity.getCoords().y
+			})
+		}.bind(this))
 	},
 
 	render: function() {
 		this.container.x = this.moveableEntity.coords.x;
 		this.container.y = this.moveableEntity.coords.y;
-		this.items.forEach(function(item) {
-			item.setNewCoords({
-				x: this.container.x + 30,
-				y: this.container.y + 30
-			})
-		}.bind(this))
 	},
 
 	getCoords: function() {
@@ -61,37 +61,60 @@ Person.prototype = {
 		this.moveableEntity.goToRoom(room);
 	},
 
-	goToCoords: function(coords) {
-		this.moveableEntity.setNewDestination(coords);
+	goToCoords: function(coords, callback) {
+		this.state = "WALKING"
+		this.moveableEntity.setNewDestination(coords, function() {
+			this.moveItems()
+			if (callback) {
+				callback();
+			}
+		}.bind(this));
 	},
 
 	stop: function() {
+		this.state = "IDLE";
 		this.moveableEntity.stop();
 	},
 
 	wanderInRoom: function(room) {
-		if (this.isInRoom(room)) {
-		//	if (!this.moveableEntity.isTravelling()) {
-		//		var coords = room.getRandomCoordinates();
-				this.moveableEntity.wanderInRoom(room);
-			// }
+		if (this.state == "WANDERING" && this.wanderingRoom == room) {
+
 		} else {
-			this.goToRoom(room);
+			this.state = "WANDERING";
+			if (this.isInRoom(room)) {
+				this.wanderingRoom = room;
+				this._wanderInRoom(room);
+			} else {
+				this.goToRoom(room);
+			}
 		}
 	},
 
-	goToItem: function(item) {
+	_wanderInRoom: function(room) {
+		this.moveableEntity.wanderInRoom(room, function() {
+			this._wanderInRoom(room);
+		}.bind(this))
+	},
+
+	goToItem: function(item, callback) {
 		this.itemToGoTo = item;
 		var coords = item.getCoords();
 		this.moveableEntity.setNewDestination({
 			x: coords.x,
 			y: coords.y
-		});
+		},function() {
+			this.moveItems()
+			callback();
+		}.bind(this));
 	},
 
-	pickupItem: function(item) {
-		this.goToItem(item);
-		this.state = "GO TO ITEM";
+	pickupItem: function(item, callback) {
+		item.looseLocation();
+		item.gainLocation(this);
+		this.items.push(item);
+		if (callback) {
+			callback();
+		}
 	},
 
 	setSpeechBubble: function(text) {
@@ -104,6 +127,10 @@ Person.prototype = {
 
 	isTravelling: function() {
 		return this.moveableEntity.isTravelling();
+	},
+
+	dropItem: function(dropItem) {
+		this.items = this.items.filter(function(item) {return item !== dropItem})
 	},
 
 	clearSpeechBubble: function() {

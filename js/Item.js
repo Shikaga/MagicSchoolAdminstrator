@@ -35,20 +35,32 @@ Item.prototype.setListeners = function() {
 	}.bind(this))
 }
 
-Item.prototype.destroy = function() {
+Item.prototype.looseLocation = function() {
 	if (this.location) {
 		this.location.dropItem(this);
 	}
+	this.location = null;
+}
+
+Item.prototype.gainLocation = function(location) {
+	this.location = location;
+}
+
+Item.prototype.looseOwner = function() {
 	if (this.owner) {
 		this.owner.dropItem(this);
 	}
+	this.owner = null;
+}
+
+Item.prototype.destroy = function() {
+	this.looseLocation();
+	this.looseOwner();
 	itemContainer.removeChild(this.container);
 }
 
 Item.prototype.getCoords = function() {
-	return {
-		x: this.moveableEntity.coords.x, y: this.moveableEntity.coords.y
-	}
+	return this.moveableEntity.coords;
 }
 
 Item.prototype.getType = function() {
@@ -61,10 +73,6 @@ Item.prototype.gainOwner = function(owner) {
 	} else {
 		this.owner = owner;
 	}
-}
-
-Item.prototype.looseOwner = function() {
-	this.owner = null;
 }
 
 Item.prototype.hasOwner = function() {
