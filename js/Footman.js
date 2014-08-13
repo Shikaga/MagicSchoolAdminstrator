@@ -13,7 +13,9 @@ Footman.prototype = {
 			this.update(dt);
 		}.bind(this))
 	},
-
+	isFree: function() {
+		return this.person.isFree();
+	}, 
 	isInRoom: function(room) {
 		return this.person.isInRoom(room);
 	},

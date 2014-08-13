@@ -22,7 +22,9 @@ Person.prototype = {
 		this.moveItems();
 		this.render();
 	},
-
+	isFree: function() {
+		return this.state == "IDLE";
+	},
 	moveItems: function() {
 		this.items.forEach(function(item) {
 			item.setNewCoords({
@@ -66,6 +68,7 @@ Person.prototype = {
 		this.moveableEntity.setNewDestination(coords, function() {
 			this.moveItems()
 			if (callback) {
+				this.state = "IDLE"
 				callback();
 			}
 		}.bind(this));
