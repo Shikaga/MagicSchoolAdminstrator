@@ -3,7 +3,6 @@ function ItemPlacer() {
 }
 
 ItemPlacer.prototype.setRoom = function(room) {
-	console.log("!!!");
 	this.clearListeners();
 	this.room = room;
 
@@ -18,7 +17,7 @@ ItemPlacer.prototype.setRoom = function(room) {
 	}.bind(this))
 
 	this.mousedown = this.room.container.on("mousedown", function(event) {
-		this.newItem(event.localX, event.localY);
+		this.createNewItemAt(event.localX, event.localY);
 	}.bind(this))
 
 	this.pressup = this.room.container.on("pressup", function(event) {
@@ -29,6 +28,18 @@ ItemPlacer.prototype.setRoom = function(room) {
 	emitr.on("itemMouseDown", function(item) {
 		this.item = item;
 	}.bind(this));
+}
+
+ItemPlacer.prototype.getRoomItemTypes = function() {
+	if (this.room) {
+		return this.room.type.items;
+	}
+}
+
+ItemPlacer.prototype.getNextItemType = function() {
+	if (this.itemTypeSelected) {
+		return this.itemTypeSelected
+	}
 }
 
 ItemPlacer.prototype.clearRoom = function() {
@@ -73,7 +84,7 @@ ItemPlacer.prototype.move = function(x,y) {
 	}
 }
 
-ItemPlacer.prototype.newItem = function(x,y) {
+ItemPlacer.prototype.createNewItemAt = function(x,y) {
 	if (this.item == null && this.itemTypeSelected) {
 		console.log("Placing ", this.itemTypeSelected);
 		var legalCoords = this.getGridPosition(this.room,x,y)
@@ -82,7 +93,7 @@ ItemPlacer.prototype.newItem = function(x,y) {
 				legalCoords.y + this.room.y, 
 				this.itemTypeSelected, this, this.room);
 			ghostItem.container.alpha = 0.5;
-			
+
 			var randomCoords = roomHandler.spawnRoom.getRandomCoordinates();
 			this.item = new Item(randomCoords.x, 
 				randomCoords.y, 

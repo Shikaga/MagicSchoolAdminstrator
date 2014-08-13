@@ -213,7 +213,7 @@ RoomHandler.prototype = {
 			var room = this.rooms[i];
 			for (var j=0; j < room.items.length; j++) {
 				var item = room.items[j];
-				if (item.type.id == itemId) {
+				if (item.isEnabled() && item.type.id == itemId) {
 					return item;
 				}
 			}
@@ -224,10 +224,16 @@ RoomHandler.prototype = {
 			var room = this.rooms[i];
 			for (var j=0; j < room.items.length; j++) {
 				var item = room.items[j];
-				if (item.type.id == itemId && item.owner == null) {
+				if (item.isEnabled() && item.type.id == itemId && item.owner == null) {
 					return item;
 				}
 			}
+		}
+	},
+	placeItemInRoom: function(item) {
+		var room = this.getRoomIn(item.moveableEntity.coords)
+		if (room) {
+			room.addItem(item);
 		}
 	}
 }

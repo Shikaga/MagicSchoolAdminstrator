@@ -17,6 +17,7 @@ LibraryActivity.prototype = {
 				this.goToLibrary();
 				break
 			case "GETTING BOOK": 
+				debugger;
 				if (this.ifArrived(roomHandler.getBookshelf())) {
 					this.goToChair();
 				}
@@ -82,10 +83,11 @@ LibraryActivity.prototype = {
 	},
 
 	ifArrived: function(item) {
+		//TODO: this is totally out of place
 		if (item) {
 			var coords = item.getCoords();
-			if (coords.x == this.student.person.moveableEntity.x && 
-				coords.y == this.student.person.moveableEntity.y) {
+			if (coords.x == this.student.getCoords().x && 
+				coords.y == this.student.getCoords().y) {
 				return true;
 			}
 		}
@@ -105,6 +107,7 @@ LibraryActivity.prototype = {
 	},
 
 	goToChair: function() {
+		debugger;
 		var chair = roomHandler.getChair();
 		if (chair) {
 			//chair.owner = this.student;

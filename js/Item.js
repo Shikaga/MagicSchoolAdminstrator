@@ -1,9 +1,10 @@
 //function Item(itemPlacer,type,container,room) {
-function Item(x,y,type,id,location) {
-	this.id = id;
+function Item(x,y,type,ip,location) {
+	this.ip = ip;
 	this.type = type;
 	this.owner = null;
-	this.location = location; // A room or person 
+	this.location = location; // A room or person
+	this.enabled = false;
 
 	this.moveableEntity = new MovableEntity(x,y)
 
@@ -13,9 +14,6 @@ function Item(x,y,type,id,location) {
 	this.container.on("click", function(evt) {
 		emitr.trigger("itemSelected", this)
 	}.bind(this));
-
-	this.lastXChange = 0;
-	this.lastYChange = 0;
 
 	this.setListeners();
 }
@@ -33,6 +31,10 @@ Item.prototype.setListeners = function() {
 
 	this.container.on("pressup", function(event) {
 	}.bind(this))
+}
+
+Item.prototype.isEnabled = function() {
+	return this.enabled;
 }
 
 Item.prototype.looseLocation = function() {
