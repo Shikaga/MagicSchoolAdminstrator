@@ -62,7 +62,6 @@ Student.prototype = {
 			this.bed = null;
 		}
 		if (this.occupiedItem) {
-			this.occupiedItem.looseOwner();
 			this.occupiedItem = null;
 		}
 	},

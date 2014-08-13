@@ -17,7 +17,6 @@ LibraryActivity.prototype = {
 				this.goToLibrary();
 				break
 			case "GETTING BOOK": 
-				debugger;
 				if (this.ifArrived(roomHandler.getBookshelf())) {
 					this.goToChair();
 				}
@@ -107,7 +106,6 @@ LibraryActivity.prototype = {
 	},
 
 	goToChair: function() {
-		debugger;
 		var chair = roomHandler.getChair();
 		if (chair) {
 			//chair.owner = this.student;
