@@ -124,21 +124,6 @@
 				var spawnCoords = roomHandler.spawnRoom.getRandomCoordinates();
 				teacher = new Teacher(spawnCoords.x, spawnCoords.y);
 
-				//debugger;
-
-				roomHandler.op.setRoom(roomHandler.spawnRoom);
-				roomHandler.op.itemTypeSelected = LibraryItems.chair;
-
-				var chair = roomHandler.op.createNewItemAt(0,100);
-				roomHandler.op.itemPlaced();
-
-				// var ghostChair = roomHandler.op.newItem(200,200);
-				// roomHandler.op.itemPlaced();
-
-				roomHandler.op.clearRoom();
-
-				// itemMovingOrganizer.moveItem(chair, ghostChair)
-
 				adminInbox = new AdminInbox();
 				adminInbox.addItem({
 					subject: "Provide Dormitaries",

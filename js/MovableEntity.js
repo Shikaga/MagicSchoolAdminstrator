@@ -38,10 +38,40 @@ MovableEntity.prototype = {
 		return room.containsCoords(this.toCoords)
 	},
 
-	setNewDestination: function(coords,callback) {
+	goToCoords: function(coords, callback) {
 		this.movementSpeed = this.speed;
 		this.toCoords = coords;
 		this.arrivedCalledback = callback;
+	},
+
+	setNewDestination: function(coords,callback) {
+
+		var currentLocation = roomHandler.getLocationNear(this.getCoords());
+		var destinationLocation = roomHandler.getLocationNear(coords);
+		//if (room != null) {
+			var doorMap = roomHandler.getDoorMap();
+			var route = doorMap.findShortestPath(currentLocation.id, destinationLocation.id);
+
+			if (route.length > 1) {
+				debugger;
+				var nextPoint = null;
+				if (route[1].substr(0,4) == "door") {
+					nextPoint = roomHandler.getPointById(route[1])
+				} else {
+					nextPoint = roomHandler.getPointById(route[2])
+				}
+				if (nextPoint) {
+					var coords2 = nextPoint.getRandomCoordinates();
+					this.goToCoords(coords2, function() {
+						this.setNewDestination(coords, callback);
+					}.bind(this));  
+				} else {
+					this.goToCoords(coords, callback);
+				}
+			} else {
+				this.goToCoords(coords, callback);
+			}
+		//}
 	},
 
 	setNewCoords: function(coords) {
@@ -54,6 +84,7 @@ MovableEntity.prototype = {
 	},
 
 	goToRoom: function(room) {
+		console.log("GO TO ROOM INVOKED")
 		var currentLocation = roomHandler.getLocationNear(this.getCoords());
 		if (room != null) {
 			var doorMap = roomHandler.getDoorMap();
@@ -61,7 +92,7 @@ MovableEntity.prototype = {
 			if (route.length > 1) {
 				var nextPoint = roomHandler.getPointById(route[1])
 				var coords = nextPoint.getRandomCoordinates();
-				this.setNewDestination(coords);  
+				this.goToCoords(coords);  
 			}
 		}
 	},
